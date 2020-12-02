@@ -4,6 +4,8 @@
   </div>
 </template>
 
-<style>
-
+<style lang="less">
+  body .el-table th.gutter{
+    display: table-cell!important;
+  }
 </style>

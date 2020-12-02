@@ -4,7 +4,7 @@
   <div class="login_box">
 <!--头像-->
     <div class="avatar_box">
-    <img src="../assets/logo.png">
+    <img src="../assets/images/logo.png">
     </div>
     <!--    表单-->
     <div>
@@ -66,6 +66,7 @@
 </script>
 
 <style lang="less" scoped>
+
   .login_container {
     height: 100%;
     /*border: 1px solid red;*/

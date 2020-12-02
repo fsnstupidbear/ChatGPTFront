@@ -1,17 +1,16 @@
 <template>
-  <el-container class="mainContainer">
+  <el-container class="mainContainer" >
 <!--    头部布局-->
     <el-header>
 <!--      logo-->
       <div class="leftBox">
-      <img src="../assets/logo.png">
-        <span>标题</span>
+      <img src="../assets/images/FsnWhite.png">
       </div>
 <!--      标题-->
       <div class="rightBox">
 
         <el-dropdown>
-          <img src="../assets/logo.png">
+          <img src="../assets/images/FsnPurple.png">
 <!--          下拉菜单-->
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-lock">修改密码</el-dropdown-item>
@@ -24,7 +23,7 @@
     <el-container>
       <!--      侧边栏-->
       <el-aside :width="isCollapse?'64px':'200px'">
-<!--        展开收起-->
+        <!--        展开收起-->
         <div class="toggle_box" @click="toggleCollapse">|||</div>
         <!--        展开收起-->
         <el-menu
@@ -44,7 +43,7 @@
       </el-aside>
       <!--      侧边栏-->
       <el-container>
-        <el-main>
+        <el-main >
           <router-view></router-view>
         </el-main>
         <el-footer>©Fsn 2012-2020</el-footer>
@@ -65,7 +64,7 @@
             {
               "id": 1,
               "parentId": 0,
-              "menuName": "系统管理",
+              "menuName": "活动",
               "url": "",
               "icon": "el-icon-setting",
               "orderNum": 1,
@@ -77,7 +76,7 @@
                 {
                   "id": 253,
                   "parentId": 1,
-                  "menuName": "欢迎页面",
+                  "menuName": "欢迎回来",
                   "url": "/welcome",
                   "icon": "el-icon-star-off",
                   "orderNum": 1,
@@ -90,7 +89,7 @@
                 {
                   "id": 226,
                   "parentId": 1,
-                  "menuName": "用户管理",
+                  "menuName": "战队队员",
                   "url": "/users",
                   "icon": "el-icon-user",
                   "orderNum": 2,
@@ -116,8 +115,8 @@
                 {
                   "id": 4,
                   "parentId": 1,
-                  "menuName": "菜单权限",
-                  "url": "/menus",
+                  "menuName": "擂台分组",
+                  "url": "/DivideGroupContest",
                   "icon": "el-icon-help",
                   "orderNum": 3,
                   "open": 0,
@@ -127,50 +126,24 @@
                   "children": []
                 },
                 {
-                  "id": 235,
+                  "id": 4,
                   "parentId": 1,
-                  "menuName": "角色管理",
-                  "url": "/roles",
-                  "icon": "el-icon-postcard",
+                  "menuName": "八强双败流程表",
+                  "url": "/TopEightDoubleElimination",
+                  "icon": "el-icon-help",
                   "orderNum": 3,
                   "open": 0,
                   "disabled": false,
-                  "perms": "",
+                  "perms": null,
                   "type": 0,
                   "children": []
                 },
-                {
-                  "id": 261,
-                  "parentId": 1,
-                  "menuName": "部门管理",
-                  "url": "/departments",
-                  "icon": "el-icon-s-home",
-                  "orderNum": 3,
-                  "open": 0,
-                  "disabled": false,
-                  "perms": "",
-                  "type": 0,
-                  "children": []
-                },
-                {
-                  "id": 319,
-                  "parentId": 1,
-                  "menuName": "公告管理",
-                  "url": "/notices",
-                  "icon": "el-icon-s-flag",
-                  "orderNum": 4,
-                  "open": 0,
-                  "disabled": true,
-                  "perms": "",
-                  "type": 0,
-                  "children": []
-                }
               ]
             },
           {
             "id": 321,
             "parentId": 1,
-            "menuName": "附件管理",
+            "menuName": "活动设置",
             "url": "",
             "icon": "el-icon-picture-outline",
             "orderNum": 2,
@@ -203,6 +176,15 @@
 
 <style lang="less" scoped>
 
+  /deep/.el-table th > .cell {
+    text-align: center;
+  }
+
+  /deep/.el-table .cell {
+    text-align: center;
+    padding: 0px 0;
+  }
+
   .el-menu{
     background-color: black;
     border-right: none;
@@ -232,8 +214,9 @@
       display: flex;
       align-items: center;
       img{
-        width: 60px;
-        height: 60px;
+        width: 130px;
+        height: 130px;
+        padding-left: 20px;
       }
     }
     .rightBox{
