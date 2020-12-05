@@ -5,35 +5,36 @@
     <div slot="header" class="clearfix">
       <span>用户列表</span>
     </div>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item label="ID">
-        <el-select v-model="formInline.city" placeholder="请选择">
-          <el-option-group
-            v-for="group in cities"
-            :key="group.label"
-            :label="group.label">
-            <el-option
-              v-for="item in group.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-option-group>
+    <el-form :inline="true" :model="users" class="demo-form-inline">
+      <el-form-item label="ID：">
+        <el-input clearable v-model="users.username" placeholder="请输入ID">请输入用户名</el-input>
+      </el-form-item>
+      <el-form-item label="分队/总队：">
+        <el-select v-model="users.department" placeholder="请选择">
+          <el-option label="分队" value="分队"></el-option>
+          <el-option label="总队" value="总队"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="分队/总队">
-        <el-select v-model="formInline.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+      <el-form-item label="职业：">
+        <el-select v-model="users.vocation" placeholder="请选择职业">
+        <el-option-group
+          v-for="group in cities"
+          :key="group.label"
+          :label="group.label">
+          <el-option
+            v-for="item in group.options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-option-group>
         </el-select>
-      </el-form-item>
-      <el-form-item label="职业">
-        <el-input clearable v-model="formInline.user" placeholder="请输入用户名">请输入用户名</el-input>
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" icon="el-icon-search" @click="onSubmit">查询</el-button>
-      <el-button type="info" icon="el-icon-refresh">信息按钮</el-button>
-      <el-button >默认按钮</el-button>
+      <el-button type="primary" icon="el-icon-search" @click="getAllUsers">查询</el-button>
+      <el-button type="info" icon="el-icon-refresh" @click="resetUsers">重置</el-button>
+        <el-button type="info" icon="el-icon-refresh" @click="show">添加</el-button>
+        <insertUser :addOrUpdateVisible="addOrUpdateVisible" @changeShow="showAddOrUpdate"></insertUser>
       </el-form-item>
     </el-form>
     <el-table
@@ -61,6 +62,12 @@
       </el-table-column>
       <el-table-column
         sortable
+        prop="department"
+        label="分队/总队"
+      >
+      </el-table-column>
+      <el-table-column
+        sortable
         prop="address"
         label="入队时间">
       </el-table-column>
@@ -81,7 +88,6 @@
         <el-button type="warning" size="mini" icon="el-ico-edit">禁用</el-button>
       </el-table-column>
     </el-table>
-    <div class="block">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -91,18 +97,20 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
-    </div>
+
   </el-card>
 </div>
 </template>
 
 <script>
   import {getAllUsers} from '../../api/users'
+  import insertUser from '../../views/user/insertUser'
 
   export default {
     name: 'Users',
     data () {
       return {
+        addOrUpdateVisible: false,
         formInline: {
           user: '',
           region: '',
@@ -110,35 +118,15 @@
         },
         usersList:[],
         cities:[
-          {
-            label: '热门城市',
-            options: [{
-              value: 'Shanghai',
-              label: '上海'
-            }, {
-              value: 'Beijing',
-              label: '北京'
-            }]
-          }, {
-            label: '城市名',
-            options: [{
-              value: 'Chengdu',
-              label: '成都'
-            }, {
-              value: 'Shenzhen',
-              label: '深圳'
-            }, {
-              value: 'Guangzhou',
-              label: '广州'
-            }, {
-              value: 'Dalian',
-              label: '大连'
-            }]
-          }
         ],
         current: 1,
         total:100,
-        size:5
+        size:5,
+        users: {
+          username: '',
+          department: '',
+          vocation: '',
+        }
       }
     },
 
@@ -148,8 +136,23 @@
     created(){
       this.getAllUsers();
     },
+    components:{
+      insertUser
+    },
 
     methods: {
+      show () {
+        this.addOrUpdateVisible = true
+      },
+      // 监听 子组件弹窗关闭后触发，有子组件调用
+      showAddOrUpdate (data) {
+        if (data === 'false') {
+          this.addOrUpdateVisible = false
+        } else {
+          this.addOrUpdateVisible = true
+        }
+      }
+      ,
       onSubmit () {
         console.log('submit!');
       },
@@ -161,10 +164,19 @@
         this.current = val;
         this.getAllUsers();
       },
-      async getAllUsers(){
-        const{data} = await getAllUsers(this.current,this.size);
+       async getAllUsers(){
+        const users = JSON.stringify(this.users)
+        const{data} = await getAllUsers(this.current,this.size,users);
         this.usersList=data.data.records;
+        this.total = data.data.total;
       },
+      //重置表单
+      async resetUsers(){
+        this.users.username='';
+        this.users.department='';
+        this.users.vocation='';
+        this.getAllUsers()
+      }
     }
   }
 </script>
