@@ -143,7 +143,7 @@
           {
             "id": 321,
             "parentId": 1,
-            "menuName": "活动设置",
+            "menuName": "赛事",
             "url": "",
             "icon": "el-icon-picture-outline",
             "orderNum": 2,
@@ -151,7 +151,19 @@
             "disabled": false,
             "perms": "",
             "type": 0,
-            "children": []
+            "children": [{
+              "id": 4,
+              "parentId": 1,
+              "menuName": "赛事总览",
+              "url": "/Competitions",
+              "icon": "el-icon-help",
+              "orderNum": 3,
+              "open": 0,
+              "disabled": false,
+              "perms": null,
+              "type": 0,
+              "children": []
+            },]
           }
           ],
 

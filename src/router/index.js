@@ -28,19 +28,24 @@ const routes = [
       {
         path: '/DivideGroupContest',
         name: 'DivideGroupContest',
-        component: () => import('../views/tool/DivideGroupContest.vue')
+        component: () => import('../views/tool/divideGroup/DivideGroupContest.vue')
       },
       {
         path: '/TopEightDoubleElimination',
         name: 'TopEightDoubleElimination',
         component: () => import('../views/topEightDoubleElimination/TopEightDoubleElimination.vue')
       },
+      {
+        path: '/Competitions',
+        name: 'Competitions',
+        component: () => import('../views/competition/Competitions.vue')
+      },
     ]
   },
   {
     path: '/DivideGroupTool',
     name: 'DivideGroupContest',
-    component: () => import('../views/tool/DivideGroupContest.vue')
+    component: () => import('../views/tool/divideGroup/DivideGroupContest.vue')
   }
 ]
 

@@ -1,5 +1,4 @@
 import request from '../util/request'
-import current from 'element-ui/packages/table/src/store/current'
 
 /**
  * 请求需要携带token
@@ -17,6 +16,19 @@ export const getAllUsers =(current,size,users)=>{
       current:current,
       size:size,
       users:users
+    }
+  })
+}
+
+//添加队员信息
+export const insertUser = (user)=>{
+  let params = new URLSearchParams();
+  params.append("user",user)
+  return request({
+    url:'/users/insertUser',
+    method:'post',
+    data:{
+      user:user
     }
   })
 }

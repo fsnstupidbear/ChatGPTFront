@@ -4,17 +4,22 @@
       <el-row :gutter="15">
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
           <el-col :span="12">
-            <el-form-item label="ID" prop="ID">
-              <el-input v-model="formData.ID" placeholder="请输入ID" clearable :style="{width: '100%'}">
+            <el-form-item label="ID" prop="username">
+              <el-input v-model="formData.username" placeholder="请输入ID" clearable :style="{width: '100%'}">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="职业" prop="vocation">
-              <el-select v-model="formData.vocation" placeholder="请选择职业" clearable :style="{width: '100%'}">
-                <el-option v-for="(item, index) in vocationOptions" :key="index" :label="item.label"
-                  :value="item.value" :disabled="item.disabled"></el-option>
-              </el-select>
+              <el-cascader
+                :show-all-levels="false"
+                v-model="formData.vocation"
+                :options="allVocationsList"
+                :props="{ expandTrigger: 'hover',
+                 children:'vocationAfterChangeList',
+                 emitPath:false
+                 }"
+                ></el-cascader>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -55,29 +60,37 @@
   </div>
 </template>
 <script>
+import { getAllVocations } from '../../api/vocations'
+import { insertUser } from '../../api/users'
+
 export default {
   props:{
     addOrUpdateVisible:{
       type: Boolean,
       default: false
-    }
-  },
+    },
+    },
   inheritAttrs: false,
   components: {},
 
   data() {
     return {
       showDialog:false,
+      allVocationsList:[{
+        baseVocation:'',
+        vocationAfterChangeList: undefined,
+      }
+      ],
       formData: {
-        ID: undefined,
-        vocation: undefined,
+        username: undefined,
+        vocation: '',
         department: undefined,
         QQNumber: undefined,
         phoneNumber: undefined,
-        joinDate: "2020-12-08",
+        joinDate: undefined,
       },
       rules: {
-        ID: [{
+        username: [{
           required: true,
           message: '请输入ID',
           trigger: 'blur'
@@ -118,9 +131,19 @@ export default {
     }
   },
   computed: {},
-  created() {},
+  created() {
+     this.getAllVocations();
+  },
   mounted() {},
   methods: {
+    message(tip){
+      this.$message(tip)
+    }
+    ,
+    async getAllVocations(){
+      const{data} = await getAllVocations();
+      this.allVocationsList = data.data.allVocationsList;
+    },
     handleClose () {
       // 子组件调用父组件方法，并传递参数
       this.$emit('changeShow', 'false')
@@ -135,7 +158,9 @@ export default {
     },
     handelConfirm() {
       this.$refs['elForm'].validate(valid => {
-        if (!valid) return
+        if (!valid) return;
+        insertUser(this.formData)
+        this.$emit('message','完成')
         this.close()
       })
     },
@@ -145,7 +170,6 @@ export default {
     // 监听 addOrUpdateVisible 改变
     addOrUpdateVisible () {
       this.showDialog = this.addOrUpdateVisible
-      console.log("addOrUpdateVisible")
     }
   }
 }
