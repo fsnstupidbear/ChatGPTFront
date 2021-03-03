@@ -4,7 +4,7 @@
   <div class="login_box">
 <!--头像-->
     <div class="avatar_box">
-    <img src="../assets/images/logo.png">
+    <img src="../assets/images/FsnPurple.png">
     </div>
     <!--    表单-->
     <div>
@@ -16,7 +16,7 @@
           <el-input v-model="loginForm.password" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('loginForm')" style="width: 100%">登录</el-button>
+          <el-button type="primary" @click="login('loginForm')" style="width: 100%">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -26,12 +26,19 @@
 </template>
 
 <script>
+  import { login } from '../api/login'
+  import { getAllUsers } from '../api/users'
+
   export default {
     name: 'Login',
     data() {
       return {
+        loginResult: {
+          isSuccess:false
+        },
         loginForm: {
-          name: '',
+          username:null,
+          password:null
         },
         loginRules: {
           username: [
@@ -46,21 +53,23 @@
       };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$router.push("/main")
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+     async login() {
+        const loginResult = await login(this.loginForm.username, this.loginForm.password);
+        this.loginResult.isSuccess = loginResult.data.isSuccess
+            if (this.loginResult.isSuccess === true) {
+              await this.$router.push("/main")
+            } else {
+              this.$message("用户名或密码错误！")
+              return false;
+            };
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+      async getAllUsers(){
+        const users = JSON.stringify(this.users)
+        const{data} = await getAllUsers(this.current,this.size,users);
+        this.usersList=data.data.records;
+        this.total = data.data.total;
+      },
     }
-
   }
 
 </script>

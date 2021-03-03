@@ -14,7 +14,6 @@ export const getPoints =()=>{
   export const divideGroup =(pointsList)=>{
     let params = new URLSearchParams();
     params.append("persons",pointsList);
-    console.log(pointsList)
   return request({
     url:'/FVF/dg',
     method:'post',

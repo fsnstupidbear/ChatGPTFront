@@ -32,3 +32,21 @@ export const insertUser = (user)=>{
     }
   })
 }
+
+//修改队员信息
+export const updateUserById = (user)=>{
+  return request({
+    url:'/users/updateUserById',
+    method:'post',
+    data:{
+      user:user
+    }
+  })
+}
+
+export const getMenuList = ()=>{
+  return request({
+    url:'/menuList/getMenuList',
+    method:'post',
+  })
+}

@@ -1,4 +1,5 @@
 <template>
+  <div data-title="标题" style="height: 100%">
   <el-container class="mainContainer" >
 <!--    头部布局-->
     <el-header>
@@ -14,7 +15,7 @@
 <!--          下拉菜单-->
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-lock">修改密码</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-user">个人信息</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-logout" @click.native="logout">登出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -46,131 +47,31 @@
         <el-main >
           <router-view></router-view>
         </el-main>
-        <el-footer>©Fsn 2012-2020</el-footer>
+        <el-footer>©Fsn 2012-2021</el-footer>
       </el-container>
     </el-container>
   </el-container>
+  </div>
 </template>
 
 <script>
   import MenuTree from '../components/MenuTree'
+  import { logout } from '../api/login'
+  import { getMenuList } from '../api/users'
   export default {
     name: 'Main',
     components: { MenuTree },
     data(){
       return{
         isCollapse:true,
-        MenuList:[
-            {
-              "id": 1,
-              "parentId": 0,
-              "menuName": "活动",
-              "url": "",
-              "icon": "el-icon-setting",
-              "orderNum": 1,
-              "open": 1,
-              "disabled": false,
-              "perms": null,
-              "type": 0,
-              "children": [
-                {
-                  "id": 253,
-                  "parentId": 1,
-                  "menuName": "欢迎回来",
-                  "url": "/welcome",
-                  "icon": "el-icon-star-off",
-                  "orderNum": 1,
-                  "open": 0,
-                  "disabled": false,
-                  "perms": "welcome:view",
-                  "type": 0,
-                  "children": []
-                },
-                {
-                  "id": 226,
-                  "parentId": 1,
-                  "menuName": "战队队员",
-                  "url": "/users",
-                  "icon": "el-icon-user",
-                  "orderNum": 2,
-                  "open": 0,
-                  "disabled": false,
-                  "perms": "users",
-                  "type": 0,
-                  "children": []
-                },
-                {
-                  "id": 321,
-                  "parentId": 1,
-                  "menuName": "擂台报名",
-                  "url": "/signUpContest",
-                  "icon": "el-icon-picture-outline",
-                  "orderNum": 2,
-                  "open": 1,
-                  "disabled": false,
-                  "perms": "",
-                  "type": 0,
-                  "children": []
-                },
-                {
-                  "id": 4,
-                  "parentId": 1,
-                  "menuName": "擂台分组",
-                  "url": "/DivideGroupContest",
-                  "icon": "el-icon-help",
-                  "orderNum": 3,
-                  "open": 0,
-                  "disabled": false,
-                  "perms": null,
-                  "type": 0,
-                  "children": []
-                },
-                {
-                  "id": 4,
-                  "parentId": 1,
-                  "menuName": "八强双败流程表",
-                  "url": "/TopEightDoubleElimination",
-                  "icon": "el-icon-help",
-                  "orderNum": 3,
-                  "open": 0,
-                  "disabled": false,
-                  "perms": null,
-                  "type": 0,
-                  "children": []
-                },
-              ]
-            },
-          {
-            "id": 321,
-            "parentId": 1,
-            "menuName": "赛事",
-            "url": "",
-            "icon": "el-icon-picture-outline",
-            "orderNum": 2,
-            "open": 1,
-            "disabled": false,
-            "perms": "",
-            "type": 0,
-            "children": [{
-              "id": 4,
-              "parentId": 1,
-              "menuName": "赛事总览",
-              "url": "/Competitions",
-              "icon": "el-icon-help",
-              "orderNum": 3,
-              "open": 0,
-              "disabled": false,
-              "perms": null,
-              "type": 0,
-              "children": []
-            },]
-          }
-          ],
-
-
+        MenuList:[],
         props: ["menuList","tagList"],
 
       }
+    },
+    created(){
+      //获取对应菜单
+      this.getMenuList();
     },
       methods: {
         handleOpen(key, keyPath) {
@@ -181,6 +82,13 @@
         },
         toggleCollapse(){
           this.isCollapse = !this.isCollapse;
+        },
+        logout(){
+          logout();
+        },
+        async getMenuList(){
+          const result = await getMenuList();
+          this.MenuList = result.data.data.menuList
         }
       }
   }

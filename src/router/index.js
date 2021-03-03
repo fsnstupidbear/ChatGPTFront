@@ -8,7 +8,8 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    meta:{title:"Fsn战队队员入口"}
   },
   {
     path: '/main',
@@ -40,7 +41,8 @@ const routes = [
         name: 'Competitions',
         component: () => import('../views/competition/Competitions.vue')
       },
-    ]
+    ],
+    meta:{title:"Fsn战队"}
   },
   {
     path: '/DivideGroupTool',

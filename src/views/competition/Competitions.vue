@@ -34,7 +34,7 @@
       <el-button type="primary" icon="el-icon-search" @click="getAllUsers">查询</el-button>
       <el-button type="info" icon="el-icon-refresh" @click="resetUsers">重置</el-button>
         <el-button type="info" icon="el-icon-refresh" @click="show">添加</el-button>
-        <insertUser :addOrUpdateVisible="addOrUpdateVisible" @changeShow="showAddOrUpdate"></insertUser>
+        <insertUser :addVisible="addVisible" @changeShow="showAdd"></insertUser>
       </el-form-item>
     </el-form>
     <el-table
@@ -110,7 +110,7 @@
     name: 'Users',
     data () {
       return {
-        addOrUpdateVisible: false,
+        addVisible: false,
         formInline: {
           user: '',
           region: '',
@@ -120,7 +120,7 @@
         cities:[
         ],
         current: 1,
-        total:100,
+        total:"",
         size:5,
         users: {
           username: '',
@@ -142,14 +142,14 @@
 
     methods: {
       show () {
-        this.addOrUpdateVisible = true
+        this.addVisible = true
       },
       // 监听 子组件弹窗关闭后触发，有子组件调用
-      showAddOrUpdate (data) {
+      showAdd (data) {
         if (data === 'false') {
-          this.addOrUpdateVisible = false
+          this.addVisible = false
         } else {
-          this.addOrUpdateVisible = true
+          this.addVisible = true
         }
       }
       ,

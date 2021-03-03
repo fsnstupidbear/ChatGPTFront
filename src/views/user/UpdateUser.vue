@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog v-bind="$attrs" :visible.sync="showDialog" v-on="$listeners" @open="onOpen" @close="onClose" title="添加队员">
+    <el-dialog :visible.sync="showDialog" @close="onClose">
       <el-row :gutter="15">
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
           <el-col :span="12">
@@ -15,6 +15,7 @@
                 :show-all-levels="false"
                 v-model="formData.vocation"
                 :options="allVocationsList"
+                filterable
                 :props="{ expandTrigger: 'hover',
                  children:'vocationAfterChangeList',
                  emitPath:false
@@ -32,8 +33,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="QQ" prop="QQNumber">
-              <el-input v-model="formData.QQNumber" placeholder="请输入QQ" clearable :style="{width: '100%'}">
+            <el-form-item label="QQ" prop="qqnumber">
+              <el-input v-model="formData.qqnumber" placeholder="请输入QQ" clearable :style="{width: '100%'}">
               </el-input>
             </el-form-item>
           </el-col>
@@ -60,16 +61,19 @@
   </div>
 </template>
 <script>
-import { insertUser } from '../../api/users'
+  import { updateUserById } from '../../api/users'
 
 export default {
   props:{
-    addVisible:{
+    updateVisible:{
       type: Boolean,
       default: false
     },
     allVocationsList:{
-      type:undefined,
+
+    },
+    choosedRowUserInfo:{
+
     }
     },
   inheritAttrs: false,
@@ -79,12 +83,13 @@ export default {
     return {
       showDialog:false,
       formData: {
+        id:undefined,
         username: undefined,
         vocation: undefined,
         department: undefined,
-        QQNumber: undefined,
+        qqnumber: undefined,
         phoneNumber: undefined,
-        joinDate: new Date(),
+        joinDate: undefined,
       },
       rules: {
         username: [{
@@ -102,7 +107,7 @@ export default {
           message: '请选择分队/总队',
           trigger: 'change'
         }],
-        QQNumber: [{
+        qqnumber: [{
           required: true,
           message: '请输入QQ',
           trigger: 'blur'
@@ -145,6 +150,7 @@ export default {
     onClose() {
       this.$refs['elForm'].resetFields()
       this.$emit('changeShow', 'false')
+      this.$emit('getAllUsers')
     },
     close() {
       this.$emit('changeShow', 'false')
@@ -153,8 +159,8 @@ export default {
     handelConfirm() {
       this.$refs['elForm'].validate(valid => {
         if (!valid) return;
-        insertUser(this.formData)
-        this.$emit('message','完成')
+        updateUserById(this.formData)
+        this.$emit('message','修改信息完成')
         this.$emit('getAllUsers')
         this.close()
       })
@@ -162,12 +168,14 @@ export default {
   },
 
   watch: {
-    // 监听 addVisible 改变
-    addVisible () {
-      this.showDialog = this.addVisible
+    // 监听 updateVisible 改变
+    updateVisible () {
+      this.showDialog = this.updateVisible
+      this.formData = this.choosedRowUserInfo
     }
   }
 }
+
 </script>
 <style>
 </style>
