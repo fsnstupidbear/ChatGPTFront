@@ -128,7 +128,7 @@
 </template>
 
 <script>
-  import { checkScore, clearAll, getPoints } from '../../../api/fvfPoints'
+  import { checkScore, clearAll, getPoints, saveCurrentRound } from '../../../api/fvfPoints'
   import {divideGroup} from '../../../api/fvfPoints'
 
   export default {
@@ -156,6 +156,7 @@
         blueTeam: [],
         pointsDesc: [{}
         ],
+        username:undefined,
         pointsList: [{
           username: '',
         }],
@@ -188,6 +189,7 @@
         this.pointsList = data.data.pointsList
       },
       async clearAll(){
+        await saveCurrentRound(this.pointsDesc)
         await clearAll()
         await this.getPoints()
       }

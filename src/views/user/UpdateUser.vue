@@ -142,6 +142,9 @@ export default {
       this.$message(tip)
     },
 
+    async updateUserById(){
+      await updateUserById(this.formData)
+    },
     handleClose () {
       // 子组件调用父组件方法，并传递参数
       this.$emit('changeShow', 'false')
@@ -156,10 +159,10 @@ export default {
       this.$emit('changeShow', 'false')
       this.$emit('getAllUsers')
     },
-    handelConfirm() {
-      this.$refs['elForm'].validate(valid => {
+     handelConfirm() {
+     this.$refs['elForm'].validate (valid => {
         if (!valid) return;
-        updateUserById(this.formData)
+        this.updateUserById()
         this.$emit('message','修改信息完成')
         this.$emit('getAllUsers')
         this.close()

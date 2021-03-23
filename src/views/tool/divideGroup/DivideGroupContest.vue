@@ -2,8 +2,8 @@
 <div style="height: 100%">
   <el-card style="height: 100%">
   <el-tabs>
+    <el-tab-pane label="训练记录" router><FVFHistory></FVFHistory></el-tab-pane>
     <el-tab-pane label="分组器" router><DivideGroupTool></DivideGroupTool></el-tab-pane>
-    <el-tab-pane label="历史记录" router></el-tab-pane>
     <el-tab-pane label="活动规则" router></el-tab-pane>
   </el-tabs>
     <div>
@@ -15,10 +15,12 @@
 
 <script>
   import DivideGroupTool from './DivideGroupTool'
+  import FVFHistory from './FVFHistory'
   export default {
     name: 'DivideGroupContest',
     components:{
-      DivideGroupTool
+      DivideGroupTool,
+      FVFHistory
     }
   }
 </script>

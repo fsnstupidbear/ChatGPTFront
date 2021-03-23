@@ -1,5 +1,5 @@
 <template>
-  <div data-title="标题" style="height: 100%">
+  <div data-title="主页" style="height: 100%">
   <el-container class="mainContainer" >
 <!--    头部布局-->
     <el-header>
@@ -14,8 +14,8 @@
           <img src="../assets/images/FsnPurple.png">
 <!--          下拉菜单-->
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-lock">修改密码</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-logout" @click.native="logout">登出</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-lock" @click.native="changeShowUpdatePassword">修改密码</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-switch-button" @click.native="logout">登出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -30,8 +30,6 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="black"
           text-color="#fff"
           active-text-color="#ffd04b"
@@ -44,6 +42,7 @@
       </el-aside>
       <!--      侧边栏-->
       <el-container>
+        <UpdatePassword :showUpdatePassword="showUpdatePassword" @changeShow="changeShowUpdatePassword"></UpdatePassword>
         <el-main >
           <router-view></router-view>
         </el-main>
@@ -58,11 +57,13 @@
   import MenuTree from '../components/MenuTree'
   import { logout } from '../api/login'
   import { getMenuList } from '../api/users'
+  import UpdatePassword from './user/updatePassword'
   export default {
     name: 'Main',
-    components: { MenuTree },
+    components: { UpdatePassword, MenuTree },
     data(){
       return{
+        showUpdatePassword:false,
         isCollapse:true,
         MenuList:[],
         props: ["menuList","tagList"],
@@ -74,22 +75,24 @@
       this.getMenuList();
     },
       methods: {
-        handleOpen(key, keyPath) {
-          console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-          console.log(key, keyPath);
-        },
         toggleCollapse(){
           this.isCollapse = !this.isCollapse;
         },
-        logout(){
+        async logout(){
           logout();
+          await this.$router.push("/")
         },
         async getMenuList(){
           const result = await getMenuList();
           this.MenuList = result.data.data.menuList
-        }
+        },
+        changeShowUpdatePassword(data){
+          if (data === 'false') {
+            this.showUpdatePassword = false
+          } else {
+            this.showUpdatePassword = true
+          }
+        },
       }
   }
 </script>

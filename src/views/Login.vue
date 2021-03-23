@@ -59,7 +59,7 @@
             if (this.loginResult.isSuccess === true) {
               await this.$router.push("/main")
             } else {
-              this.$message("用户名或密码错误！")
+              this.$message(loginResult.data.message)
               return false;
             };
       },

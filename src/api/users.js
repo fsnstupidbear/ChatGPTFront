@@ -5,10 +5,6 @@ import request from '../util/request'
  * @returns {AxiosPromise}
  */
 export const getAllUsers =(current,size,users)=>{
-  let params = new URLSearchParams();
-  params.append("current",current);
-  params.append("size",size);
-  params.append("users",users);
   return request({
     url:'/users/getAllUsers',
     method:'post',
@@ -22,8 +18,6 @@ export const getAllUsers =(current,size,users)=>{
 
 //添加队员信息
 export const insertUser = (user)=>{
-  let params = new URLSearchParams();
-  params.append("user",user)
   return request({
     url:'/users/insertUser',
     method:'post',
@@ -47,6 +41,24 @@ export const updateUserById = (user)=>{
 export const getMenuList = ()=>{
   return request({
     url:'/menuList/getMenuList',
+    method:'post',
+  })
+}
+
+export const isForbiddenUserById = (id,isForbidden)=>{
+  return request({
+    url:'/users/isForbiddenUserById',
+    method:'post',
+    data:{
+      id:id,
+      isForbidden:isForbidden
+    }
+  })
+}
+
+export const getModuleOptions = ()=>{
+  return request({
+    url:'/module/getModuleOptions',
     method:'post',
   })
 }

@@ -4,21 +4,20 @@
     <!--  用户列表卡片-->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>角色管理</span>
+        <span>比赛类别管理</span>
       </div>
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="查询角色名：">
-          <el-input clearable v-model="role" placeholder="输入角色名"></el-input>
+        <el-form-item label="查询比赛类别：">
+          <el-input clearable v-model="competitionClassify" placeholder="输入比赛类别"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="getallRolesPageList">查询</el-button>
-          <el-button type="info" icon="el-icon-refresh" @click="reset">重置</el-button>
-          <el-button type="info" icon="el-icon-refresh" @click="showAddWindow">添加</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="getAllCompetitionClassifyList">查询</el-button>
+          <el-button type="info" icon="el-icon-refresh" @click="addCompetitionClassify">添加</el-button>
         </el-form-item>
       </el-form>
       <el-table
         :show-overflow-tooltip="true"
-        :data="rolesList"
+        :data="allCompetitionClassifyList"
         height="377px"
         border
         style="width: 100%"
@@ -29,16 +28,25 @@
           width="60px">
         </el-table-column>
         <el-table-column
-          prop="role"
-          label="ID"
+          prop="competitionClassify"
+          label="赛事类别"
         >
         </el-table-column>
         <el-table-column
           :show-overflow-tooltip="true"
           label="操作"
-          width="70px">
+          width="120px">
           <template slot-scope="scope">
-            <el-button type="danger" size="mini" icon="el-ico-edit">禁用</el-button>
+            <el-popconfirm
+              @onConfirm="deleteCompetitionClassifyById(scope.row.id)"
+              style="margin-left: 10px"
+              icon="el-icon-info"
+              icon-color="black"
+              title="确定进行此操作吗？"
+            >
+              <el-button slot="reference" type="danger" size="mini" icon="el-ico-delete">
+                删除</el-button>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -56,15 +64,18 @@
 </template>
 
 <script>
-  import { getAllVocations } from '../../api/vocations'
   import { Message } from 'element-ui'
-  import { getAllRolesPageList } from '../../api/userRole'
+  import {
+    addCompetitionClassify,
+    deleteCompetitionClassifyById,
+    getAllCompetitionClassifyList
+  } from '../../api/competition'
 
   export default {
     name: 'Users',
     data () {
       return {
-        role:'',
+        competitionClassify:undefined,
         updateVisible: false,
         addVisible: false,
         authorityVisible:false,
@@ -78,7 +89,7 @@
         current: 1,
         total: undefined,
         size: 6,
-
+        allCompetitionClassifyList:undefined,
         allVocationsList: undefined,
         vocation: '',
       }
@@ -88,12 +99,26 @@
      * 创建组件时调用
      */
     created () {
-      this.getallRolesPageList()
+      this.getAllCompetitionClassifyList()
     },
     components: {
+
     },
 
     methods: {
+      async addCompetitionClassify(){
+        if(this.competitionClassify.trim()!="") {
+          await addCompetitionClassify(this.competitionClassify);
+          this.competitionClassify="";
+          this.getAllCompetitionClassifyList();
+        }else {
+          this.$message("赛事类别名不能为空！")
+        }
+      },
+      async deleteCompetitionClassifyById(id){
+        await deleteCompetitionClassifyById(id);
+        await this.getAllCompetitionClassifyList();
+      },
       showAuthorityWindow (data) {
         this.authorityVisible = true
         this.choosedRowUserInfo = data
@@ -105,10 +130,10 @@
           this.authorityVisible = true
         }
       },
-      //获取全部职业
-      async getAllVocations () {
-        const { data } = await getAllVocations()
-        this.allVocationsList = data.data.allVocationsList
+      //获取全部比赛类别
+      async getAllCompetitionClassifyList () {
+        const { data } = await getAllCompetitionClassifyList(this.competitionClassify,this.size,this.current)
+        this.allCompetitionClassifyList = data.data.competitionClassifyList
       },
       //悬浮窗提示
       message (tip) {
@@ -128,7 +153,7 @@
         } else {
           this.updateVisible = true
         }
-        this.getAllUsers()
+        this.getAllCompetitionClassifyList()
       },
       //显示增加用户窗口
       showAddWindow () {
@@ -141,27 +166,15 @@
         } else {
           this.addVisible = true
         }
-        this.getAllUsers()
+        this.getAllCompetitionClassifyList()
       },
       handleSizeChange (val) {
         this.size = val
-        this.getAllUsers()
+        this.getAllCompetitionClassifyList()
       },
       handleCurrentChange (val) {
         this.current = val
-        this.getAllUsers()
-      },
-      async getallRolesPageList () {
-        const { data } = await getAllRolesPageList(this.role,this.current, this.size)
-        this.rolesList = data.data.rolesList
-        this.total = data.data.total
-      },
-      //重置表单
-      async reset () {
-        this.role="";
-        this.getallRolesPageList()
-        Message.closeAll()
-        this.$message('已重置搜索条件！')
+        this.getAllCompetitionClassifyList()
       },
     }
   }

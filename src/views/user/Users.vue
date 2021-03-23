@@ -44,7 +44,6 @@
       <el-table
         :show-overflow-tooltip="true"
         :data="usersList"
-        height="377px"
         border
         style="width: 100%"
       >
@@ -52,6 +51,10 @@
           type="index"
           label="序号"
           width="60px">
+        </el-table-column>
+        <el-table-column
+          prop="id"
+          label="账号">
         </el-table-column>
         <el-table-column
           prop="username"
@@ -85,20 +88,34 @@
           prop="phoneNumber"
           label="联系电话">
         </el-table-column>
-
-
         <el-table-column
           :show-overflow-tooltip="true"
           label="操作"
-          width="270px">
+          width="360px">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-ico-delete" @click="showUpdateWindow(scope.row)">
+            <el-button type="primary" size="mini" icon="el-ico-edit" @click="showUpdateWindow(scope.row)">
+              奖惩积分
+            </el-button>
+            <el-button type="primary" size="mini" icon="el-ico-edit" @click="showUpdateWindow(scope.row)">
               信息更改
             </el-button>
             <el-button type="warning" size="mini" icon="el-ico-edit" @click="showAuthorityWindow(scope.row)">
-              权限配置
+              角色配置
             </el-button>
-            <el-button type="danger" size="mini" icon="el-ico-edit">账号禁用</el-button>
+              <el-popconfirm
+                @onConfirm="isForbiddenUserById(scope.row.id,scope.row.isEnabled)"
+                style="margin-left: 10px"
+                icon="el-icon-info"
+                icon-color="black"
+                title="确定进行此操作吗？"
+              >
+                <el-button slot="reference" type="danger" size="mini" icon="el-ico-delete"
+                v-if="scope.row.isEnabled==='1'">
+                  禁用账号</el-button>
+                <el-button slot="reference" type="danger" size="mini" icon="el-ico-delete"
+                           v-if="scope.row.isEnabled==='0'">
+                  启用账号</el-button>
+              </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -117,7 +134,7 @@
 </template>
 
 <script>
-  import { getAllUsers } from '../../api/users'
+  import { getAllUsers, isForbiddenUserById } from '../../api/users'
   import insertUser from '../../views/user/insertUser'
   import { getAllVocations } from '../../api/vocations'
   import { Message } from 'element-ui'
@@ -167,6 +184,10 @@
     },
 
     methods: {
+      async isForbiddenUserById(id,isForbidden){
+        await isForbiddenUserById(id,isForbidden);
+        await this.getAllUsers();
+      },
       showAuthorityWindow (data) {
         this.authorityVisible = true
         this.choosedRowUserInfo = data

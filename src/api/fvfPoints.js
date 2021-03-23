@@ -39,3 +39,35 @@ export const checkScore =(score)=>{
     }
   })
 }
+
+export const getAllFVFHistory =(current,size)=>{
+  return request({
+    url:'/fvfhistory/getAllFVFHistory',
+    method:'post',
+    data:{
+      current:current,
+      size:size
+    }
+  })
+}
+
+export const saveCurrentRound =(pointsList)=>{
+  return request({
+    url:'/fvfhistory/saveCurrentRound',
+    method:'post',
+    data:{
+      pointsList:pointsList,
+    }
+  })
+}
+
+
+export const deleteCurrentRecord =(id)=>{
+  return request({
+    url:'/fvfhistory/deleteCurrentRecord',
+    method:'post',
+    data:{
+      id:id,
+    }
+  })
+}
