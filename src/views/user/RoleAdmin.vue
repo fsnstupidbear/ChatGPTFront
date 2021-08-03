@@ -1,8 +1,8 @@
 <template>
 
-  <div>
+  <div style="width: 100%;height: 100%">
     <!--  用户列表卡片-->
-    <el-card class="box-card">
+    <el-card class="box-card" style="width: 100%;height: 100%">
       <div slot="header" class="clearfix">
         <span>角色管理</span>
       </div>
@@ -19,7 +19,6 @@
       <el-table
         :show-overflow-tooltip="true"
         :data="rolesList"
-        height="377px"
         border
         style="width: 100%"
       >

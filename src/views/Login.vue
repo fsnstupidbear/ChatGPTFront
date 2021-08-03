@@ -13,7 +13,7 @@
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
-          <el-input v-model="loginForm.password" prefix-icon="el-icon-lock"></el-input>
+          <el-input type="password" v-model="loginForm.password" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login('loginForm')" style="width: 100%">登录</el-button>
@@ -43,11 +43,11 @@
         loginRules: {
           username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 0, max: 5, message: '长度在 0 到 5 个字符', trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 0, max: 5, message: '长度在 0 到 5 个字符', trigger: 'blur' }
           ]
         }
       };
@@ -57,17 +57,11 @@
         const loginResult = await login(this.loginForm.username, this.loginForm.password);
         this.loginResult.isSuccess = loginResult.data.isSuccess
             if (this.loginResult.isSuccess === true) {
-              await this.$router.push("/main")
+              await this.$router.push("/welcome")
             } else {
               this.$message(loginResult.data.message)
               return false;
             };
-      },
-      async getAllUsers(){
-        const users = JSON.stringify(this.users)
-        const{data} = await getAllUsers(this.current,this.size,users);
-        this.usersList=data.data.records;
-        this.total = data.data.total;
       },
     }
   }

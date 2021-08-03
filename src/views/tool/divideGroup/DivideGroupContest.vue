@@ -4,7 +4,6 @@
   <el-tabs>
     <el-tab-pane label="训练记录" router><FVFHistory></FVFHistory></el-tab-pane>
     <el-tab-pane label="分组器" router><DivideGroupTool></DivideGroupTool></el-tab-pane>
-    <el-tab-pane label="活动规则" router></el-tab-pane>
   </el-tabs>
     <div>
 

@@ -18,7 +18,6 @@
       <el-table
         :show-overflow-tooltip="true"
         :data="allCompetitionClassifyList"
-        height="377px"
         border
         style="width: 100%"
       >

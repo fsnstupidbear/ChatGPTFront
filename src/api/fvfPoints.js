@@ -12,8 +12,6 @@ export const getPoints =()=>{
 }
 
   export const divideGroup =(pointsList)=>{
-    let params = new URLSearchParams();
-    params.append("persons",pointsList);
   return request({
     url:'/FVF/dg',
     method:'post',
@@ -69,5 +67,12 @@ export const deleteCurrentRecord =(id)=>{
     data:{
       id:id,
     }
+  })
+}
+
+export const getTeamMember =()=>{
+  return request({
+    url:'/FVF/getTeamMember',
+    method:'post',
   })
 }

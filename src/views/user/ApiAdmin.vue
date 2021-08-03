@@ -1,8 +1,8 @@
 <template>
 
-  <div>
+  <div style="width: 100%;height: 100%">
     <!--  用户列表卡片-->
-    <el-card class="box-card">
+    <el-card class="box-card" style="width: 100%;height: 100%">
       <div slot="header" class="clearfix">
         <span>API管理</span>
       </div>

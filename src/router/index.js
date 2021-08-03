@@ -16,6 +16,36 @@ const routes = [
     component: () => import('../views/Main.vue'),
     children: [
       {
+        path: '/Points',
+        name: 'Points',
+        component: () => import('../views/points/MyPoints.vue'),
+        meta:{title:"Fsn战队——我的积分"}
+      },
+      {
+        path: '/TeamActivityRules',
+        name: 'TeamActivityRules',
+        component: () => import('../views/teamActivityRules/ActivityRulesList.vue'),
+        meta:{title:"Fsn战队——队规/活动规则"}
+      },
+      {
+        path: '/News',
+        name: 'News',
+        component: () => import('../views/news/News.vue'),
+        meta:{title:"Fsn战队——新闻"}
+      },
+      {
+        path: '/NewsList',
+        name: 'NewsList',
+        component: () => import('../views/news/NewsList.vue'),
+        meta:{title:"Fsn战队——新闻列表"}
+      },
+      {
+        path: '/NewsEditor',
+        name: 'NewsEditor',
+        component: () => import('../views/news/NewsEditor.vue'),
+        meta:{title:"Fsn战队——撰写新闻"}
+      },
+      {
         path: '/TrainingPlanSetting',
         name: 'TrainingPlanSetting',
         component: () => import('../views/training/TrainingPlanSetting.vue'),

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="15">
-      <el-form ref="whoIsUnderCover" :model="formData" :rules="rules" size="medium" label-width="100px"
+      <el-form :model="formData" :rules="rules" size="medium" label-width="100px"
         label-position="left">
         <el-col :span="12">
           <el-form-item label="卧底词：" prop="undercover">
@@ -69,6 +69,17 @@
         label="词"
       >
       </el-table-column>
+      <el-table-column
+        prop="word"
+        label="操作"
+        width="90px"
+      >
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" icon="el-ico-edit" @click="out(scope.row.id)">
+            出局
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -76,7 +87,7 @@
   import {
     clearAllGamerInfo,
     configUndercover,
-    controllerGetCurrentGameInfo,
+    controllerGetCurrentGameInfo, out,
   } from '../../api/game'
 
 export default {
@@ -133,6 +144,10 @@ export default {
   },
   mounted() {},
   methods: {
+    async out(id){
+      await out(id)
+      this.controllerGetCurrentGameInfo()
+    },
     async clearAllGamerInfo(){
       await clearAllGamerInfo();
       this.controllerGetCurrentGameInfo()
@@ -150,16 +165,13 @@ export default {
       this.total = playerInfo.data.data.total;
     },
      submitForm() {
-      this.$refs['whoIsUnderCover'].validate(valid => {
-        if (!valid) return
         this.submitData()
-      })
     },
     resetForm() {
       this.$refs['whoIsUnderCover'].resetFields()
     },
-    submitData(){
-        configUndercover(this.formData)
+    async submitData(){
+       await configUndercover(this.formData)
       this.$message("配置已完成")
     }
   }

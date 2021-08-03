@@ -6,6 +6,8 @@
       <div slot="header" class="clearfix">
         <span>每周训练计划制定</span>
       </div>
+      <ChangePlan :changePlanWindowVisable="changePlanWindowVisable" :choosedRowId="choosedRowId"
+                  @changeShow="changePlanWindow" @getWeekPlan="getWeekPlan"></ChangePlan>
       <el-table
         :show-overflow-tooltip="true"
         :data="weekPlan"
@@ -13,28 +15,24 @@
         style="width: 100%"
       >
         <el-table-column
-          prop="url"
+          width="200px"
+          prop="day"
           label=""
         >
         </el-table-column>
         <el-table-column
-          prop="description"
-          label="功能"
+          prop="plan"
+          label="计划"
         >
-        </el-table-column>
-        <el-table-column
-          prop="role"
-          label="拥有权限的角色"
-          >
         </el-table-column>
 
         <el-table-column
           :show-overflow-tooltip="true"
           label="操作"
-          width="120px">
+          width="90px">
           <template slot-scope="scope">
-            <el-button type="warning" size="mini" icon="el-ico-delete" @click="changeShowApiRoleWindowVisible(scope.row.url)">
-              更改可访问角色
+            <el-button type="primary" size="mini" icon="el-ico-delete" @click="changePlanWindow(scope.row.id)">
+              更改计划
             </el-button>
           </template>
         </el-table-column>
@@ -44,19 +42,19 @@
 </template>
 
 <script>
-  import { Message } from 'element-ui'
   import { getWeekPlan } from '../../api/training'
+  import ChangePlan from './changePlan'
 
   export default {
     name: 'TrainingPlanSetting',
     data () {
       return {
+        weekPlan:undefined,
         api:undefined,
         module:undefined,
         moduleOptions:undefined,
-        apiRoleWindowVisible: false,
-        choosedRowUrl:undefined,
-        choosedRowUserInfo: [],
+        changePlanWindowVisable: false,
+        choosedRowId:undefined,
         apiList: [],
         current: 1,
         total: undefined,
@@ -71,24 +69,25 @@
      * 创建组件时调用
      */
     created () {
-      this.getAllApi()
+      this.getWeekPlan()
     },
     components: {
+      ChangePlan
     },
 
     methods: {
       //控制角色配置界面是否显示
       changePlanWindow(data){
         if (data === 'false') {
-          this.apiRoleWindowVisible = false
+          this.changePlanWindowVisable = false
         } else {
-          this.choosedRowUrl = data
-          this.apiRoleWindowVisible = true
+          this.choosedRowId = data
+          this.changePlanWindowVisable = true
         }
       },
       async getWeekPlan () {
-        const { data } = await getWeekPlan()
-        this.weekPlan = data.data.weekPlan
+        const data = await getWeekPlan()
+        this.weekPlan = data.data.data.weekPlan
       },
     }
   }

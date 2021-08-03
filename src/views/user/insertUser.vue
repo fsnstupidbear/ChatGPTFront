@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog v-bind="$attrs" :visible.sync="showDialog" v-on="$listeners" @open="onOpen" @close="onClose" title="添加队员">
+    <el-dialog :visible.sync="showDialog" v-on="$listeners" @open="onOpen" @close="onClose" title="添加队员">
       <el-row :gutter="15">
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
           <el-col :span="12">
@@ -148,7 +148,6 @@ export default {
     },
     close() {
       this.$emit('changeShow', 'false')
-      this.$emit('getAllUsers')
     },
     handelConfirm() {
       this.$refs['elForm'].validate(valid => {

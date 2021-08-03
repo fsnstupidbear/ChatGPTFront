@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :visible.sync="showDialog" @close="onClose">
+    <el-dialog :visible.sync="showDialog" @close="onClose" title="更改信息">
       <el-row :gutter="15">
         <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="100px">
           <el-col :span="12">

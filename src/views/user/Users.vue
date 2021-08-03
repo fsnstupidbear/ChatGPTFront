@@ -1,12 +1,14 @@
 <template>
 
-  <div>
+  <div style="width: 100%;height: 100%">
     <!--  用户列表卡片-->
-    <el-card class="box-card">
+    <el-card class="box-card" style="width: 100%;height: 100%">
       <div slot="header" class="clearfix">
         <span>用户列表</span>
       </div>
       <el-form :inline="true" :model="users" class="demo-form-inline">
+        <AddOrMinusPoints :addOrMinusPointsWindowVisable="addOrMinusPointsWindowVisable" :choosedUserId="choosedUserId"
+                          :choosedUsername="choosedUsername" @changeShow="showAddOrMinusPointsWindowVisable"></AddOrMinusPoints>
         <insertUser :addVisible="addVisible" @changeShow="showAdd" @message="message" @getAllUsers="getAllUsers"
                     :allVocationsList="allVocationsList"></insertUser>
         <UpdateUser :updateVisible="updateVisible" @changeShow="showUpdate" @message="message"
@@ -89,11 +91,19 @@
           label="联系电话">
         </el-table-column>
         <el-table-column
+          prop="sumPoints"
+          label="总积分">
+        </el-table-column>
+          <el-table-column
+            prop="currentMonthPoints"
+            label="当月积分">
+        </el-table-column>
+        <el-table-column
           :show-overflow-tooltip="true"
           label="操作"
           width="360px">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-ico-edit" @click="showUpdateWindow(scope.row)">
+            <el-button type="primary" size="mini" icon="el-ico-edit" @click="showAddOrMinusPointsWindowVisable(scope.row)">
               奖惩积分
             </el-button>
             <el-button type="primary" size="mini" icon="el-ico-edit" @click="showUpdateWindow(scope.row)">
@@ -123,7 +133,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="current"
-        :page-sizes="[6, 10, 20, 50]"
+        :page-sizes="[5, 10, 20, 50]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
@@ -140,25 +150,23 @@
   import { Message } from 'element-ui'
   import UpdateUser from './UpdateUser'
   import AuthorityAdmin from './AuthorityAdmin'
+  import AddOrMinusPoints from './AddOrMinusPoints'
 
   export default {
     name: 'Users',
     data () {
       return {
+        addOrMinusPointsWindowVisable:false,
         updateVisible: false,
         addVisible: false,
         authorityVisible:false,
+        choosedUserId:undefined,
+        choosedUsername:undefined,
         choosedRowUserInfo: [],
-        formInline: {
-          user: '',
-          region: '',
-          city: '',
-        },
         usersList: [],
-        cities: [],
         current: 1,
         total: undefined,
-        size: 6,
+        size: 5,
         users: {
           username: '',
           department: '',
@@ -178,12 +186,23 @@
       this.getAllVocations()
     },
     components: {
+      AddOrMinusPoints,
       AuthorityAdmin,
       UpdateUser,
       insertUser
     },
 
     methods: {
+      //控制奖惩积分界面是否显示
+      showAddOrMinusPointsWindowVisable(data){
+        if (data === 'false') {
+          this.addOrMinusPointsWindowVisable = false
+        } else {
+          this.choosedUserId = data.id
+          this.choosedUsername = data.username
+          this.addOrMinusPointsWindowVisable = true
+        }
+      },
       async isForbiddenUserById(id,isForbidden){
         await isForbiddenUserById(id,isForbidden);
         await this.getAllUsers();

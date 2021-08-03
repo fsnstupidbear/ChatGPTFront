@@ -34,7 +34,7 @@
           text-color="#fff"
           active-text-color="#ffd04b"
           :collapse="isCollapse"
-          unique-opened
+
           router
           >
           <MenuTree :menuList="this.MenuList"></MenuTree>

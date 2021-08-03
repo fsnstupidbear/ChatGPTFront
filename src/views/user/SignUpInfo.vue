@@ -5,7 +5,6 @@
   <el-table
     :show-overflow-tooltip="true"
     :data="competitionsSignUpInfos"
-    height="377px"
     border
     style="width: 100%"
   >
@@ -20,8 +19,8 @@
     </el-table-column>
   </el-table>
       <div style="margin:10px 0 auto;text-align: center">
-    <el-button type="primary" style="width:40%" @click="signUp">报名</el-button>
-    <el-button style="width:40%">取消报名</el-button>
+    <el-button type="primary" style="width:40%" :disabled="this.signUpButtonDisabled" @click="signUp">报名</el-button>
+    <el-button style="width:40%" @click="cancelSignUp">取消报名</el-button>
       </div>
     </el-card>
   </div>
@@ -29,7 +28,7 @@
 </template>
 
 <script>
-  import { addSignUpInfo, getSignUpInfo } from '../../api/signUp'
+  import { addSignUpInfo, cancelSignUp, getSignUpInfo } from '../../api/signUp'
 
   export default {
     name: 'SignUpInfo',
@@ -49,8 +48,7 @@
     watch: {
       // 监听 addVisible 改变
       async signUpInfoVisible () {
-        const data = await getSignUpInfo()
-        console.log(data.data.data)
+        const data = await getSignUpInfo(this.choosedRowCompetitionId)
         this.competitionsSignUpInfos = data.data.data.competitionsSignUpInfos
       }
     },
@@ -59,10 +57,23 @@
         this.$emit('changeShow', 'false')
       },
       async getSignUpInfo(){
-        await getSignUpInfo(this.choosedRowCompetitionId)
+        const data = await getSignUpInfo(this.choosedRowCompetitionId)
+        this.competitionsSignUpInfos = data.data.data.competitionsSignUpInfos
       },
      async signUp(){
-        await addSignUpInfo(this.choosedRowCompetitionId)
+       this.signUpButtonDisabled=true
+       const {data} = await addSignUpInfo(this.choosedRowCompetitionId)
+       this.signUpButtonDisabled=false
+       this.getSignUpInfo()
+       this.$message({
+           message:data.tip,
+           type:'success'
+         },
+         )
+      },
+      async cancelSignUp(){
+        await cancelSignUp(this.choosedRowCompetitionId)
+        this.getSignUpInfo()
       }
     }
   }

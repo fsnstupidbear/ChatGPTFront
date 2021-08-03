@@ -19,3 +19,13 @@ export const getSignUpInfo =(competitionId)=>{
     }
   })
 }
+
+export const cancelSignUp =(competitionId)=>{
+  return request({
+    url:'/competitionsSignUpInfo/cancelSignUp',
+    method:'post',
+    data:{
+      competitionId:competitionId,
+    }
+  })
+}

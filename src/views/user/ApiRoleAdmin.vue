@@ -67,7 +67,6 @@
       async apiRoleWindowVisible(){
         this.getAllRoles()
         const data = await selectRolesHasThisAuthority(this.choosedRowUrl)
-        console.log(data.data.data)
         this.rolesHasThisAuthority = data.data.data.rolesHasThisAuthority
       }
     }

@@ -55,3 +55,13 @@ export const clearAllGamerInfo = ()=>{
     method:'post',
   })
 }
+
+export const out = (id)=>{
+  return request({
+    url:'/whoIsUndercover/out',
+    method:'post',
+    data:{
+      id:id
+    }
+  })
+}

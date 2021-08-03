@@ -43,3 +43,59 @@ export const getAllCompetitions =(competitionName,current,size)=>{
     }
   })
 }
+
+export const updateSignUpStateById =(id,state)=>{
+  return request({
+    url:'/competitions/updateSignUpStateById',
+    method:'post',
+    data:{
+      id:id,
+      state:state,
+    }
+  })
+}
+
+export const ifHasAuthority =()=>{
+  return request({
+    url:'/competitions/ifHasAuthority',
+    method:'post',
+  })
+}
+
+export const commitResult =(id,result)=>{
+  return request({
+    url:'/competitions/commitResult',
+    method:'post',
+    data:{
+      id:id,
+      result:result
+    }
+  })
+}
+
+export const getAllCompetitionClassify =()=>{
+  return request({
+    url:'/competitionClassify/getAllCompetitionClassify',
+    method:'post',
+  })
+}
+
+export const insertCompetition =(competitionInfo)=>{
+  return request({
+    url:'/competitions/insertCompetition',
+    method:'post',
+    data:{
+      competitionInfo:competitionInfo
+    }
+  })
+}
+
+export const deleteCompetitionById =(competitionId)=>{
+  return request({
+    url:'/competitions/deleteCompetitionById',
+    method:'post',
+    data:{
+      competitionId:competitionId
+    }
+  })
+}

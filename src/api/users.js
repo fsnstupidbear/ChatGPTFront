@@ -62,3 +62,16 @@ export const getModuleOptions = ()=>{
     method:'post',
   })
 }
+
+export const insertPointsRecordById = (userId,reason,addOrMinus,points)=>{
+  return request({
+    url:'/pointsRecord/insertPointsRecordById',
+    method:'post',
+    data:{
+      userId:userId,
+      addOrMinus:addOrMinus,
+      points:points,
+      reason:reason
+    }
+  })
+}

@@ -7,28 +7,93 @@
         <el-col :span="6">
           <el-form style="margin-bottom: 5px">
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[0].username"></el-input>
+              <el-select v-model="pointsList[0].username" placeholder="请输入选手ID"
+                         clearable
+              filterable style="width:100%">
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[1].username"></el-input>
+              <el-select v-model="pointsList[1].username" placeholder="请输入选手ID"
+                         filterable style="width:100%" clearable>
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[2].username"></el-input>
+              <el-select v-model="pointsList[2].username" placeholder="请输入选手ID"
+                         filterable style="width:100%" clearable>
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[3].username"></el-input>
+              <el-select v-model="pointsList[3].username" placeholder="请输入选手ID"
+                         filterable style="width:100%" clearable>
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[4].username"></el-input>
+              <el-select v-model="pointsList[4].username" placeholder="请输入选手ID"
+                         filterable style="width:100%" clearable>
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[5].username"></el-input>
+              <el-select v-model="pointsList[5].username" placeholder="请输入选手ID"
+                                        filterable style="width:100%" clearable>
+              <el-option
+                v-for="item in teamMember"
+                :key="item.id"
+                :label="item.username"
+                :value="item.username">
+              </el-option>
+            </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[6].username"></el-input>
+              <el-select v-model="pointsList[6].username" placeholder="请输入选手ID"
+                         filterable style="width:100%" clearable>
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
-              <el-input placeholder="请输入选手ID" v-model="pointsList[7].username"></el-input>
+              <el-select v-model="pointsList[7].username" placeholder="请输入选手ID"
+                         filterable style="width:100%" clearable>
+                <el-option
+                  v-for="item in teamMember"
+                  :key="item.id"
+                  :label="item.username"
+                  :value="item.username">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
               <el-button style="width:100%" type="primary" @click="divideGroup" :disabled="divideGroupNotComplete">分组</el-button>
@@ -128,13 +193,14 @@
 </template>
 
 <script>
-  import { checkScore, clearAll, getPoints, saveCurrentRound } from '../../../api/fvfPoints'
+  import { checkScore, clearAll, getPoints, getTeamMember, saveCurrentRound } from '../../../api/fvfPoints'
   import {divideGroup} from '../../../api/fvfPoints'
 
   export default {
     name: 'DivideGroupTool',
     data () {
       return {
+        teamMember:undefined,
         score:'20',
         scoreOption: [{
           "label": "红  :  蓝   ＝   2  :  0",
@@ -158,7 +224,7 @@
         ],
         username:undefined,
         pointsList: [{
-          username: '',
+          username: undefined,
         }],
         divideGroupNotComplete:false,
         checkScoreNotComplete:false
@@ -166,8 +232,14 @@
     },
     created () {
       this.getPoints()
+      this.getTeamMember()
     },
     methods: {
+      async getTeamMember(){
+        const {data} = await getTeamMember()
+        this.teamMember = data.data.teamMember
+      },
+
       async checkScore(){
         this.checkScoreNotComplete=true
         await checkScore(this.score)
@@ -175,6 +247,7 @@
         this.checkScoreNotComplete=false
       },
      async divideGroup () {
+        console.log(this.pointsList[0].username)
         this.divideGroupNotComplete=true
         const pointsList = JSON.stringify(this.pointsList)
         await divideGroup(pointsList)

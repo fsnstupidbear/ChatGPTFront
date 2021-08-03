@@ -5,7 +5,6 @@
       <el-table
         :show-overflow-tooltip="true"
         :data="fvfHistory"
-        height="377px"
         border
         style="width: 100%"
       >
@@ -70,7 +69,6 @@
     methods: {
         async getAllFVFHistory(){
           const { data } = await getAllFVFHistory(this.current, this.size)
-          console.log(data)
           this.fvfHistory = data.data.fvfHistory
           this.total = data.data.total
         },
