@@ -3,16 +3,16 @@
     <el-dialog :visible.sync="showUpdatePassword" @close="close" title="更改密码">
       <el-form ref="updatePassword" :model="formData" :rules="rules" size="mini" label-width="100px"
                label-position="left">
-        <el-form-item label="旧密码：" prop="field101">
-          <el-input v-model="formData.field101" placeholder="请输入旧密码" clearable show-password
+        <el-form-item label="旧密码：" prop="oldPassword">
+          <el-input v-model="formData.oldPassword" placeholder="请输入旧密码" clearable show-password maxlength="16" minlength="6" show-word-limit
                     :style="{width: '100%'}"></el-input>
         </el-form-item>
-        <el-form-item label="新密码：" prop="field102">
-          <el-input v-model="formData.field102" placeholder="请输入新密码" clearable show-password
+        <el-form-item label="新密码：" prop="newPassword">
+          <el-input v-model="formData.newPassword" placeholder="请输入新密码，包含字母和数字，8-16个字符" clearable show-password maxlength="16" minlength="6" show-word-limit
                     :style="{width: '100%'}"></el-input>
         </el-form-item>
-        <el-form-item label="再次输入：" prop="field103">
-          <el-input v-model="formData.field103" placeholder="请输入再次输入新密码" clearable show-password
+        <el-form-item label="再次输入：" prop="reWriteNewPassword">
+          <el-input v-model="formData.reWriteNewPassword" placeholder="请再次输入新密码，包含字母和数字，8-16个字符" clearable show-password maxlength="16" minlength="6" show-word-limit
                     :style="{width: '100%'}"></el-input>
         </el-form-item>
       </el-form>
@@ -24,6 +24,8 @@
   </div>
 </template>
 <script>
+  import { updatePassword } from '../../api/users'
+
   export default {
     inheritAttrs: false,
     components: {},
@@ -37,26 +39,33 @@
       return {
         showDialog: false,
         formData: {
-          field101: undefined,
-          field102: undefined,
-          field103: undefined,
-          field104: undefined,
+          oldPassword: undefined,
+          newPassword: undefined,
+          reWriteNewPassword: undefined,
         },
         rules: {
-          field101: [{
+          oldPassword: [{
             required: true,
             message: '请输入旧密码',
-            trigger: 'blur'
+            trigger: 'change'
           }],
-          field102: [{
+          newPassword: [{
             required: true,
             message: '请输入新密码',
-            trigger: 'blur'
+            trigger: 'change',
+          },{
+            pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
+            message: '包含字母和数字,6-16个字符',
+            trigger: 'change'
           }],
-          field103: [{
+          reWriteNewPassword: [{
             required: true,
             message: '请输入再次输入新密码',
-            trigger: 'blur'
+            trigger: 'change'
+          },{
+            pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
+            message: '包含字母和数字,6-16个字符',
+            trigger: 'change'
           }],
         },
       }
@@ -72,9 +81,20 @@
         this.$emit('changeShow', 'false')
       },
       handelConfirm () {
+        this.$refs['updatePassword'].validate(valid => {
+          if (!valid || this.formData.newPassword !== this.formData.reWriteNewPassword) return
+          // TODO 提交表单
+          console.log(111)
+          this.updatePassword()
+          this.$emit('changeShow', 'false')
+        })
 
-        this.$emit('changeShow', 'false')
       },
+      async updatePassword(){
+        console.log("旧密码："+this.formData.oldPassword)
+        const {data} = await updatePassword(this.formData.oldPassword,this.formData.newPassword)
+        this.$message(data.data.message)
+      }
     }
   }
 

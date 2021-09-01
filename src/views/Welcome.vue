@@ -78,7 +78,6 @@
       async getNewestMessageList(){
         const {data} = await getNewestMessageList()
         this.messageList = data.data.messageList
-        console.log(this.messageList)
       },
       scanNews(id){
         this.$router.push({

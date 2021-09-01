@@ -13,10 +13,10 @@
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
-          <el-input type="password" v-model="loginForm.password" prefix-icon="el-icon-lock"></el-input>
+          <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="login('loginForm')" style="width: 100%">登录</el-button>
+          <el-button type="primary" @click="login('loginForm')" @keyup.enter="login('loginForm')" style="width: 100%">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -120,6 +120,4 @@
         padding: 20px;
       }
     }
-
-
 </style>

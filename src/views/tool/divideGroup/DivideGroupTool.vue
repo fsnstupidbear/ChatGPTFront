@@ -247,7 +247,6 @@
         this.checkScoreNotComplete=false
       },
      async divideGroup () {
-        console.log(this.pointsList[0].username)
         this.divideGroupNotComplete=true
         const pointsList = JSON.stringify(this.pointsList)
         await divideGroup(pointsList)

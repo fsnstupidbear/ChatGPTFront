@@ -75,3 +75,14 @@ export const insertPointsRecordById = (userId,reason,addOrMinus,points)=>{
     }
   })
 }
+
+export const updatePassword = (oldPassword,newPassword)=>{
+  return request({
+    url:'/users/updatePassword',
+    method:'post',
+    data:{
+      oldPassword:oldPassword,
+      newPassword:newPassword,
+    }
+  })
+}

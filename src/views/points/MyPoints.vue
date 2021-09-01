@@ -14,9 +14,9 @@
 
 <script>
   import { getMyPointsChartCurrentMonthData } from '../../api/points'
-  var echarts = require('echarts/lib/echarts');
+  const echarts = require('echarts/lib/echarts');
+  require('echarts/lib/component/grid');
   require('echarts/lib/chart/line');
-  require('echarts/lib/component/title');
 
   export default {
     name: 'MyPoints',

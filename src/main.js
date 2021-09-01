@@ -43,6 +43,5 @@ import '../public/tinymce/zh_CN.js'
 Vue.prototype.$tinymce = tinymce;
 Vue.use(VueTinymce);
 
-//引入echarts
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+
+
