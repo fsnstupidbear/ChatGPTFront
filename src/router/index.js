@@ -16,6 +16,12 @@ const routes = [
     component: () => import('../views/Main.vue'),
     children: [
       {
+        path: '/AllTeammatesInfo',
+        name: 'AllTeammatesInfo',
+        component: () => import('../views/user/AllTeammatesInfo.vue'),
+        meta:{title:"队友信息"}
+      },
+      {
         path: '/Points',
         name: 'Points',
         component: () => import('../views/points/MyPoints.vue'),

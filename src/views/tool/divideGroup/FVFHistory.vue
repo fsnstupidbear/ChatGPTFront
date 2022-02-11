@@ -41,7 +41,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="current"
-        :page-sizes="[6, 10, 20, 50]"
+        :page-sizes="[5, 10, 20, 50]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
@@ -60,7 +60,7 @@
         fvfHistory:undefined,
         total:undefined,
         current:1,
-        size:6
+        size:20
       }
     },
     created () {

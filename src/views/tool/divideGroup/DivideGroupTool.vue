@@ -184,7 +184,7 @@
               </el-table-column>
             </el-table>
           </div>
-          <el-button style="margin-top: 5px;width: 100%;" type="primary" @click="clearAll">全部清空</el-button>
+          <el-button style="margin-top: 5px;width: 100%;" type="primary" :disabled="this.pointsDesc[0].points!=0?false:true" @click="clearAll">全部清空</el-button>
         </el-col>
       </div>
     </el-row>
@@ -259,6 +259,7 @@
         this.blueTeam = data.data.blueTeam
         this.pointsDesc = data.data.pointsDesc
         this.pointsList = data.data.pointsList
+        console.log(this.pointsDesc)
       },
       async clearAll(){
         await saveCurrentRound(this.pointsDesc)

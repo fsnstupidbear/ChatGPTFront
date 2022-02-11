@@ -7,13 +7,12 @@
         <span>角色管理</span>
       </div>
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="查询角色名：">
+        <el-form-item>
           <el-input clearable v-model="role" placeholder="输入角色名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="getallRolesPageList">查询</el-button>
-          <el-button type="info" icon="el-icon-refresh" @click="reset">重置</el-button>
-          <el-button type="info" icon="el-icon-refresh" @click="showAddWindow">添加</el-button>
+          <el-button type="info" icon="el-icon-refresh" @click="addRole">添加</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -45,7 +44,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="current"
-        :page-sizes="[6, 10, 20, 50]"
+        :page-sizes="[5, 10, 20, 50]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
@@ -57,7 +56,7 @@
 <script>
   import { getAllVocations } from '../../api/vocations'
   import { Message } from 'element-ui'
-  import { getAllRolesPageList } from '../../api/userRole'
+  import { addRole, getAllRoles, getAllRolesPageList } from '../../api/userRole'
 
   export default {
     name: 'Users',
@@ -76,7 +75,7 @@
         rolesList: [],
         current: 1,
         total: undefined,
-        size: 6,
+        size: 5,
 
         allVocationsList: undefined,
         vocation: '',
@@ -104,44 +103,11 @@
           this.authorityVisible = true
         }
       },
-      //获取全部职业
-      async getAllVocations () {
-        const { data } = await getAllVocations()
-        this.allVocationsList = data.data.allVocationsList
-      },
       //悬浮窗提示
       message (tip) {
         this.$message(tip)
       }
       ,
-      //显示更改信息窗口
-      showUpdateWindow (data) {
-        this.updateVisible = true
-        this.choosedRowUserInfo = data
-      },
-      //更改是否显示信息窗口
-      showUpdate (data) {
-        this.updateVisible = true
-        if (data === 'false') {
-          this.updateVisible = false
-        } else {
-          this.updateVisible = true
-        }
-        this.getAllUsers()
-      },
-      //显示增加用户窗口
-      showAddWindow () {
-        this.addVisible = true
-      },
-      // 监听 子组件弹窗关闭后触发，有子组件调用
-      showAdd (data) {
-        if (data === 'false') {
-          this.addVisible = false
-        } else {
-          this.addVisible = true
-        }
-        this.getAllUsers()
-      },
       handleSizeChange (val) {
         this.size = val
         this.getAllUsers()
@@ -155,13 +121,11 @@
         this.rolesList = data.data.rolesList
         this.total = data.data.total
       },
-      //重置表单
-      async reset () {
-        this.role="";
-        this.getallRolesPageList()
-        Message.closeAll()
-        this.$message('已重置搜索条件！')
-      },
+      async addRole(){
+        await addRole(this.role)
+        this.role = ''
+        await this.getallRolesPageList()
+      }
     }
   }
 </script>

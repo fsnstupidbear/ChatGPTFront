@@ -4,6 +4,18 @@ import request from '../util/request'
  * 请求需要携带token
  * @returns {AxiosPromise}
  */
+
+export const getAllUsersNormalInfo =(current,size,users)=>{
+  return request({
+    url:'/users/getAllUsersNormalInfo',
+    method:'post',
+    data:{
+      current:current,
+      size:size,
+      users:users
+    }
+  })
+}
 export const getAllUsers =(current,size,users)=>{
   return request({
     url:'/users/getAllUsers',

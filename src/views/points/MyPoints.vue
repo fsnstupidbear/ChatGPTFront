@@ -17,6 +17,7 @@
   const echarts = require('echarts/lib/echarts');
   require('echarts/lib/component/grid');
   require('echarts/lib/chart/line');
+  require('echarts/lib/component/title')
 
   export default {
     name: 'MyPoints',

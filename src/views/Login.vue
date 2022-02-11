@@ -22,7 +22,6 @@
     </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -43,11 +42,15 @@
         loginRules: {
           username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 0, max: 5, message: '长度在 0 到 5 个字符', trigger: 'blur' }
+            { max: 5, message: '', trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 0, max: 5, message: '长度在 0 到 5 个字符', trigger: 'blur' }
+            {
+              pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
+              max: 16,
+              trigger: 'blur'
+            }
           ]
         }
       };

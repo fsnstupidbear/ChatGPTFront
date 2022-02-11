@@ -4,15 +4,18 @@
       <el-form ref="updatePassword" :model="formData" :rules="rules" size="mini" label-width="100px"
                label-position="left">
         <el-form-item label="旧密码：" prop="oldPassword">
-          <el-input v-model="formData.oldPassword" placeholder="请输入旧密码" clearable show-password maxlength="16" minlength="6" show-word-limit
+          <el-input v-model="formData.oldPassword" placeholder="请输入旧密码"
+                    clearable show-password maxlength="16" minlength="6" show-word-limit
                     :style="{width: '100%'}"></el-input>
         </el-form-item>
         <el-form-item label="新密码：" prop="newPassword">
-          <el-input v-model="formData.newPassword" placeholder="请输入新密码，包含字母和数字，8-16个字符" clearable show-password maxlength="16" minlength="6" show-word-limit
+          <el-input v-model="formData.newPassword" type="text" placeholder="请输入新密码，包含字母和数字，6-16个字符"
+                    clearable show-password maxlength="16" minlength="6" show-word-limit
                     :style="{width: '100%'}"></el-input>
         </el-form-item>
         <el-form-item label="再次输入：" prop="reWriteNewPassword">
-          <el-input v-model="formData.reWriteNewPassword" placeholder="请再次输入新密码，包含字母和数字，8-16个字符" clearable show-password maxlength="16" minlength="6" show-word-limit
+          <el-input v-model="formData.reWriteNewPassword" placeholder="请再次输入新密码，包含字母和数字，6-16个字符"
+                    clearable show-password maxlength="16" minlength="6" show-word-limit
                     :style="{width: '100%'}"></el-input>
         </el-form-item>
       </el-form>
@@ -83,8 +86,6 @@
       handelConfirm () {
         this.$refs['updatePassword'].validate(valid => {
           if (!valid || this.formData.newPassword !== this.formData.reWriteNewPassword) return
-          // TODO 提交表单
-          console.log(111)
           this.updatePassword()
           this.$emit('changeShow', 'false')
         })
@@ -93,7 +94,11 @@
       async updatePassword(){
         console.log("旧密码："+this.formData.oldPassword)
         const {data} = await updatePassword(this.formData.oldPassword,this.formData.newPassword)
-        this.$message(data.data.message)
+        this.$message({
+            message:data.message,
+            type:'success'
+          },
+        )
       }
     }
   }
