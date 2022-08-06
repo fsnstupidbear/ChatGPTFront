@@ -18,6 +18,14 @@
         <el-form-item>
           <el-button type="primary" @click="login('loginForm')" @keyup.enter="login('loginForm')" style="width: 100%">登录</el-button>
         </el-form-item>
+        <el-form-item>
+          <div>
+            <img src="../assets/images/beian.png"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41020402000032" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="" style="float:left;"/>
+            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">豫公网安备 41020402000032号</p></a>
+            <a target="_blank" href="http://beian.miit.gov.cn" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="" style="float:left;"/>
+              <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">豫ICP备2020025287号</p></a>
+          </div>
+        </el-form-item>
       </el-form>
     </div>
     </div>

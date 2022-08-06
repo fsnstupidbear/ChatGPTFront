@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     name: 'Login',
     component: () => import('../views/Login.vue'),
-    meta:{title:"Fsn战队队员入口"}
+    meta:{title:"Fsn战队-指尖演绎舞蹈"}
   },
   {
     path: '/main',
