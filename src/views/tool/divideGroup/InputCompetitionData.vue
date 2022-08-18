@@ -194,7 +194,7 @@
     </div>
 
     <el-form-item style="text-align: center">
-    <el-button type="primary" style="text-align: center" @click="handleConfirm">
+    <el-button type="primary" style="text-align: center" @click="handleConfirm" :disabled="this.startButtonDisabled">
       结算并查看账单
     </el-button>
     </el-form-item>
@@ -209,6 +209,7 @@ export default {
   name: 'InputCompetitionData',
   data () {
     return {
+      startButtonDisabled:false,
       competitionID:undefined,
       selectMemberModelRecordId:undefined,
       currentRoundPlayers:undefined,
@@ -355,6 +356,7 @@ export default {
     handleConfirm(){
       this.$refs['elForm'].validate(async valid => {
         if (!valid) return;
+        this.startButtonDisabled = true
         await this.selectMemberModelCheckScore()
         this.$router.push({
           path: '/SelectMemberModelCheck',

@@ -144,9 +144,8 @@
           </el-col>
           <el-col :span="24">
             <el-form-item style="text-align: center">
-              <el-button type="primary" style="text-align: center" @click="handelConfirm">开始抽签</el-button>
+              <el-button type="primary" style="text-align: center" :disabled="startButtonDisabled" @click="handelConfirm">开始抽签</el-button>
             </el-form-item>
-
           </el-col>
         </el-row>
       </el-form>
@@ -186,6 +185,7 @@ export default {
       callback()
     }
     return {
+      startButtonDisabled:false,
       teamMember: undefined,
       selectMemberModelRecordId:undefined,
       formData: {
@@ -294,6 +294,7 @@ export default {
       this.$refs['elForm'].validate(async valid => {
         if (!valid) return
         //传输配置数据
+        this.startButtonDisabled = true
         await this.submitConfigNewSelectMemberModel()
         this.$router.push({
           path: '/InputCompetitionData',

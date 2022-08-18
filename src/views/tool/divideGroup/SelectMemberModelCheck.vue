@@ -115,8 +115,6 @@ export default {
   created () {
     this.selectMemberModelRecordID = this.$route.params.selectMemberModelRecordID
     this.isHasID()
-    this.winnerList = this.$route.params.winnerList
-    this.loserList = this.$route.params.loserList
     this.getRecordInfo()
   },
   mounted () {
@@ -143,8 +141,16 @@ export default {
       this.failedTeamNeedPay = data.data.failedTeamNeedPay
       this.freeChargeRuleNum = data.data.freeChargeRuleNum
       this.freeChargeRulePlayerList = data.data.freeChargeRulePlayerList
-      this.winnerPlayers = data.data.winnerPlayers
-      this.loserPlayers = data.data.loserPlayers
+      this.winnerPlayers = this.formatKillNum(data.data.winnerPlayers)
+      this.loserPlayers = this.formatKillNum(data.data.loserPlayers)
+    },
+
+    formatKillNum(players){
+      for (let i = 0; i < players.length; i++) {
+        players[i].killNum = parseInt(players[i].killNum)
+      }
+      console.log(players)
+      return players
     }
   }
 }
