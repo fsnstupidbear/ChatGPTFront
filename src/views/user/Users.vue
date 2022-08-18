@@ -4,7 +4,7 @@
     <!--  用户列表卡片-->
     <el-card class="box-card" style="width: 100%;height: 100%">
       <div slot="header" class="clearfix">
-        <span>用户列表</span>
+        <span>队员名单</span>
       </div>
       <el-form :inline="true" :model="users" class="demo-form-inline">
         <AddOrMinusPoints :addOrMinusPointsWindowVisable="addOrMinusPointsWindowVisable" :choosedUserId="choosedUserId"

@@ -36,7 +36,7 @@
           label="操作"
           width="70px">
           <template slot-scope="scope">
-            <el-button type="danger" size="mini" icon="el-ico-edit">禁用</el-button>
+            <el-button type="danger" size="mini" icon="el-ico-edit" @click="disabledRole(scope.row.id)">禁用</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -56,7 +56,7 @@
 <script>
   import { getAllVocations } from '../../api/vocations'
   import { Message } from 'element-ui'
-  import { addRole, getAllRoles, getAllRolesPageList } from '../../api/userRole'
+  import { addRole, disabledRole, getAllRoles, getAllRolesPageList } from '../../api/userRole'
 
   export default {
     name: 'Users',
@@ -110,11 +110,11 @@
       ,
       handleSizeChange (val) {
         this.size = val
-        this.getAllUsers()
+        this.getallRolesPageList()
       },
       handleCurrentChange (val) {
         this.current = val
-        this.getAllUsers()
+        this.getallRolesPageList()
       },
       async getallRolesPageList () {
         const { data } = await getAllRolesPageList(this.role,this.current, this.size)
@@ -122,9 +122,19 @@
         this.total = data.data.total
       },
       async addRole(){
-        await addRole(this.role)
-        this.role = ''
-        await this.getallRolesPageList()
+        if(this.role !=null&&"") {
+          await addRole(this.role)
+          this.role = ''
+          await this.getallRolesPageList()
+          this.$message("添加完成")
+        }else {
+          this.$message("请输入角色名")
+        }
+      },
+
+      async disabledRole(ID){
+        await disabledRole(ID)
+        this.$message("角色已禁用")
       }
     }
   }

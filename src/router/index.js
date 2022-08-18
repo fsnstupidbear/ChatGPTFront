@@ -16,10 +16,28 @@ const routes = [
     component: () => import('../views/Main.vue'),
     children: [
       {
+        path: '/SelectMemberModelCheck',
+        name: 'SelectMemberModelCheck',
+        component: () => import('../views/tool/divideGroup/SelectMemberModelCheck.vue'),
+        meta:{title:"Fsn——点将模式账单"}
+      },
+      {
+        path: '/InputCompetitionData',
+        name: 'InputCompetitionData',
+        component: () => import('../views/tool/divideGroup/InputCompetitionData.vue'),
+        meta:{title:"Fsn——点将模式结算"}
+      },
+      {
+        path: '/ConfigNewSelectMemberModel',
+        name: 'ConfigNewSelectMemberModel',
+        component: () => import('../views/tool/divideGroup/ConfigNewSelectMemberModel.vue'),
+        meta:{title:"Fsn——开始新4V4"}
+      },
+      {
         path: '/AllTeammatesInfo',
         name: 'AllTeammatesInfo',
         component: () => import('../views/user/AllTeammatesInfo.vue'),
-        meta:{title:"队友信息"}
+        meta:{title:"Fsn战队——队友信息"}
       },
       {
         path: '/Points',

@@ -21,7 +21,7 @@
           width="200px"
           fixed="left"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div v-if="(scope.row.type=='1')">
             <span>{{'新闻'}}</span>
             </div>
@@ -35,7 +35,7 @@
         </el-table-column>
         <el-table-column
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span @click="scanNews(scope.row.id)" style="cursor: pointer"><u>{{scope.row.title}}</u></span>
           </template>
         </el-table-column>
@@ -43,7 +43,7 @@
           fixed="right"
           width="200px"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{scope.row.updateDate}}</span>
           </template>
         </el-table-column>

@@ -197,7 +197,7 @@
   import {divideGroup} from '../../../api/fvfPoints'
 
   export default {
-    name: 'DivideGroupTool',
+    name: 'SelectMemberModelCheck',
     data () {
       return {
         teamMember:undefined,
@@ -220,8 +220,7 @@
         ],
         redTeam: [],
         blueTeam: [],
-        pointsDesc: [{}
-        ],
+        pointsDesc: [{}],
         username:undefined,
         pointsList: [{
           username: undefined,
@@ -259,7 +258,6 @@
         this.blueTeam = data.data.blueTeam
         this.pointsDesc = data.data.pointsDesc
         this.pointsList = data.data.pointsList
-        console.log(this.pointsDesc)
       },
       async clearAll(){
         await saveCurrentRound(this.pointsDesc)

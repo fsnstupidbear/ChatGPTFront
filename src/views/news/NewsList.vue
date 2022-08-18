@@ -4,7 +4,7 @@
     <!--  用户列表卡片-->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>新闻管理</span>
+        <span>战队新闻</span>
       </div>
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="查询新闻：">
@@ -14,7 +14,8 @@
           <el-button type="primary" icon="el-icon-search" @click="getNewsList">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" @click="insertNews('1')">撰写新闻</el-button>
+          <el-button type="primary" icon="el-icon-circle-plus" @click="insertNews('1')"
+                     v-if="hasCaptainAuthority">撰写新闻</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -50,7 +51,8 @@
           <template slot-scope="scope">
             <el-button slot="reference" type="primary" size="mini" icon="el-ico-delete" @click="scanNews(scope.row.id)">
               查看</el-button>
-            <el-button slot="reference" type="primary" size="mini" icon="el-ico-delete" @click="updateNews(scope.row)">
+            <el-button slot="reference" type="primary" size="mini" icon="el-ico-delete" @click="updateNews(scope.row)"
+                       v-if="hasCaptainAuthority">
               编辑</el-button>
             <el-popconfirm
               @onConfirm="deleteNewsById(scope.row.id)"
@@ -59,7 +61,8 @@
               icon-color="black"
               title="确定进行此操作吗？"
             >
-              <el-button slot="reference" type="danger" size="mini" icon="el-ico-delete">
+              <el-button slot="reference" type="danger" size="mini" icon="el-ico-delete"
+                         v-if="hasCaptainAuthority">
                 删除</el-button>
             </el-popconfirm>
 
@@ -81,11 +84,13 @@
 
 <script>
   import { deleteNewsById, getNewsList } from '../../api/news'
+  import { ifHasCaptainAuthority } from '../../api/selectMemberModel'
 
   export default {
     name: 'NewsList',
     data () {
       return {
+        hasCaptainAuthority:false,
         title:undefined,
         competitionClassify:undefined,
         updateVisible: false,
@@ -105,12 +110,17 @@
      */
     created () {
       this.getNewsList()
+      this.ifHasCaptainAuthority()
     },
     components: {
 
     },
 
     methods: {
+      async ifHasCaptainAuthority(){
+        const {data} = await ifHasCaptainAuthority()
+        this.hasCaptainAuthority = data.data.ifHasCaptainAuthority
+      },
       insertNews(type){
         this.$router.push({
           path: '/NewsEditor',

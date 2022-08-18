@@ -1,5 +1,15 @@
 import request from '../util/request'
 
+export const disabledRole =(ID)=>{
+  return request({
+    url:'/userRole/disabledRole',
+    method:'post',
+    data:{
+      ID:ID
+    }
+  })
+}
+
 export const addRole =(role)=>{
   return request({
     url:'/userRole/addRole',

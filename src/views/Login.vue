@@ -55,7 +55,7 @@
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
             {
-              pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
+              // pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/,
               max: 16,
               trigger: 'blur'
             }

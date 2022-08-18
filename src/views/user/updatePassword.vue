@@ -92,7 +92,6 @@
 
       },
       async updatePassword(){
-        console.log("旧密码："+this.formData.oldPassword)
         const {data} = await updatePassword(this.formData.oldPassword,this.formData.newPassword)
         this.$message({
             message:data.message,

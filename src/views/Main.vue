@@ -23,7 +23,7 @@
     <!--    头部布局-->
     <el-container>
       <!--      侧边栏-->
-      <el-aside :width="isCollapse?'64px':'200px'">
+      <el-aside class="wrap" :width="isCollapse?'64px':'200px'">
         <!--        展开收起-->
         <div class="toggle_box" @click="toggleCollapse">|||</div>
         <!--        展开收起-->
@@ -46,7 +46,7 @@
         <el-main >
           <router-view></router-view>
         </el-main>
-        <el-footer>©Fsn 2012-2021</el-footer>
+        <el-footer>©Fsn 2012——{{this.year}}   指尖演绎舞蹈，打造最强DNF战队</el-footer>
       </el-container>
     </el-container>
   </el-container>
@@ -67,14 +67,24 @@
         isCollapse:true,
         MenuList:[],
         props: ["menuList","tagList"],
-
+        year:'',
       }
     },
     created(){
       //获取对应菜单
       this.getMenuList();
+      this.nowtime();
     },
       methods: {
+        //获取当前时间
+        nowtime() {
+          let nowDate = new Date();
+          let date = {
+            // 获取当前年份
+            year: nowDate.getFullYear(),
+          };
+          this.year = date.year;
+        },
         toggleCollapse(){
           this.isCollapse = !this.isCollapse;
         },
@@ -98,6 +108,12 @@
 </script>
 
 <style lang="less" scoped>
+.wrap {
+  overflow:scroll
+}
+.wrap::-webkit-scrollbar {
+  display: none;
+}
 
   /deep/.el-table th > .cell {
     text-align: center;
@@ -174,7 +190,6 @@
 
   .el-main {
     background-color: #E9EEF3;
-
   }
 
   body > .el-container {

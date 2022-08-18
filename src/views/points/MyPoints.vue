@@ -45,7 +45,6 @@
     methods:{
       async getMyPointsChartCurrentMonthData() {
         const {data} = await getMyPointsChartCurrentMonthData();
-        console.log(this.series[0].data)
         this.series[0].data = data.data.seriesData
         this.xAxis.data = data.data.xAxisData
         this.currentMonthPoints = data.data.currentMonthPoints
