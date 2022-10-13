@@ -122,7 +122,6 @@ export default {
   },
   methods: {
     isHasID(){
-      console.log(this.selectMemberModelRecordID)
       if(this.selectMemberModelRecordID === undefined){
         this.$router.push({
           path: '/DivideGroupContest',
@@ -149,7 +148,6 @@ export default {
       for (let i = 0; i < players.length; i++) {
         players[i].killNum = parseInt(players[i].killNum)
       }
-      console.log(players)
       return players
     }
   }

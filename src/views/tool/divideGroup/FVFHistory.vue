@@ -120,8 +120,8 @@
     data () {
       return {
         fourVsFourSelectMemberModelHistory:undefined,
-        selectMemberModelCurrent:undefined,
-        selectMemberModelSize:undefined,
+        selectMemberModelCurrent:1,
+        selectMemberModelSize:10,
         selectMemberModelTotal:undefined,
 
         hasCaptainAuthority:false,
@@ -149,7 +149,7 @@
       },
 
       async getFourVsFourSelectMemberModelHistory(){
-        const { data } = await getFourVsFourSelectMemberModelHistory(this.current, this.size)
+        const { data } = await getFourVsFourSelectMemberModelHistory(this.selectMemberModelCurrent, this.selectMemberModelSize)
         this.fourVsFourSelectMemberModelHistory = data.data.fourVsFourSelectMemberModelHistory
         this.selectMemberModelTotal = data.data.total
       },

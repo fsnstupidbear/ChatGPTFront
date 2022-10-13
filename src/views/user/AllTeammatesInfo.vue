@@ -81,7 +81,7 @@
         @current-change="handleCurrentChange"
         :current-page="current"
         :page-sizes="[5, 10, 20, 50]"
-        :page-size="100"
+        :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -112,7 +112,7 @@
         usersList: [],
         current: 1,
         total: undefined,
-        size: 5,
+        size: 10,
         users: {
           username: '',
           department: '',
@@ -151,7 +151,7 @@
       },
       async isForbiddenUserById(id,isForbidden){
         await isForbiddenUserById(id,isForbidden);
-        await this.getAllUsers();
+        await this.getAllUsersNormalInfo();
       },
       showAuthorityWindow (data) {
         this.authorityVisible = true
@@ -181,15 +181,15 @@
         } else {
           this.addVisible = true
         }
-        this.getAllUsers()
+        this.getAllUsersNormalInfo()
       },
       handleSizeChange (val) {
         this.size = val
-        this.getAllUsers()
+        this.getAllUsersNormalInfo()
       },
       handleCurrentChange (val) {
         this.current = val
-        this.getAllUsers()
+        this.getAllUsersNormalInfo()
       },
       async getAllUsersNormalInfo () {
         const users = JSON.stringify(this.users)
@@ -202,7 +202,7 @@
         this.users.username = ''
         this.users.department = ''
         this.users.vocation = ''
-        this.getAllUsers()
+        this.getAllUsersNormalInfo()
         Message.closeAll()
         this.message('已重置搜索条件！')
       },
