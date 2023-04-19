@@ -1,4 +1,4 @@
-# fsnweb
+# SPbPU ChatGPT Front End
 
 ## Project setup
 ```
