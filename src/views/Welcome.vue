@@ -2,7 +2,7 @@
   <div>
   <el-card>
     <div slot="header">
-    <span>本周训练计划</span>
+    <span>计划</span>
   </div>
   <el-steps :active="weekday-1" finish-status="success">
     <el-step :title="item.day" :description="item.plan" v-for="item in plans"></el-step>

@@ -7,8 +7,6 @@
         <span>队员名单</span>
       </div>
       <el-form :inline="true" :model="users" class="demo-form-inline">
-        <AddOrMinusPoints :addOrMinusPointsWindowVisable="addOrMinusPointsWindowVisable" :choosedUserId="choosedUserId"
-                          :choosedUsername="choosedUsername" @changeShow="showAddOrMinusPointsWindowVisable"></AddOrMinusPoints>
         <insertUser :addVisible="addVisible" @changeShow="showAdd" @message="message" @getAllUsers="getAllUsers"
                     :allVocationsList="allVocationsList"></insertUser>
         <UpdateUser :updateVisible="updateVisible" @changeShow="showUpdate" @message="message"
@@ -18,24 +16,6 @@
                         :choosedRowUserInfo="choosedRowUserInfo"></AuthorityAdmin>
         <el-form-item label="ID：">
           <el-input clearable v-model="users.username" placeholder="请输入ID">请输入用户名</el-input>
-        </el-form-item>
-        <el-form-item label="分队/总队：">
-          <el-select v-model="users.department" placeholder="请选择">
-            <el-option label="分队" value="分队"></el-option>
-            <el-option label="总队" value="总队"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="职业：">
-          <el-cascader
-            :show-all-levels="false"
-            v-model="users.vocation"
-            :options="allVocationsList"
-            :props="{ expandTrigger: 'hover',
-                 children:'vocationAfterChangeList',
-                 value:'value',
-                 label:'label',
-                 emitPath:false}"
-          ></el-cascader>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="getAllUsers">查询</el-button>
@@ -193,16 +173,6 @@
     },
 
     methods: {
-      //控制奖惩积分界面是否显示
-      showAddOrMinusPointsWindowVisable(data){
-        if (data === 'false') {
-          this.addOrMinusPointsWindowVisable = false
-        } else {
-          this.choosedUserId = data.id
-          this.choosedUsername = data.username
-          this.addOrMinusPointsWindowVisable = true
-        }
-      },
       async isForbiddenUserById(id,isForbidden){
         await isForbiddenUserById(id,isForbidden);
         await this.getAllUsers();

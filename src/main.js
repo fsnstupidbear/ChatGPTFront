@@ -7,6 +7,7 @@ import ElementUI from 'element-ui'
 import './assets/css/global.css'
 import VueWechatTitle from 'vue-wechat-title';
 import axios from 'axios'
+import 'github-markdown-css'
 
 Vue.use(VueWechatTitle)
 Vue.use(ElementUI)

@@ -1,5 +1,5 @@
 {
-  "name": "fsnweb",
+  "name": "",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,11 +10,15 @@
   "dependencies": {
     "@packy-tang/vue-tinymce": "^1.1.0",
     "axios": "^0.21.0",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",
     "echarts": "^5.1.2",
     "element-ui": "^2.13.2",
+    "event-source-polyfill": "^1.0.31",
+    "github-markdown-css": "^5.2.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.2",
+    "marked": "^4.3.0",
     "moment": "^2.29.1",
     "tinymce": "^5.7.1",
     "vue": "^2.6.11",

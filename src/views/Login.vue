@@ -1,14 +1,19 @@
 <template>
 <!--  登录容器-->
     <div class="login_container">
-  <div class="login_box">
+  <div class="login_box" :style="{width:this.pageInnerWidth>500?'500px':'90%'}">
 <!--头像-->
     <div class="avatar_box">
-    <img src="../assets/images/FsnPurple.png">
+    <img src="../assets/images/Emblem-spbpu.png">
     </div>
     <!--    表单-->
     <div>
       <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="loginForm">
+        <el-form-item>
+          <div style="text-align: center">
+            <p style="font-size: 20px;font-weight: bold">SPbPU ChatGPT</p>
+          </div>
+        </el-form-item>
         <el-form-item label="" prop="username">
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
@@ -17,14 +22,6 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login('loginForm')" @keyup.enter="login('loginForm')" style="width: 100%">登录</el-button>
-        </el-form-item>
-        <el-form-item>
-          <div>
-            <img src="../assets/images/beian.png"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41020402000032" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="" style="float:left;"/>
-            <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">豫公网安备 41020402000032号</p></a>
-            <a target="_blank" href="http://beian.miit.gov.cn" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="" style="float:left;"/>
-              <p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">豫ICP备2020025287号</p></a>
-          </div>
         </el-form-item>
       </el-form>
     </div>
@@ -60,10 +57,18 @@
               trigger: 'blur'
             }
           ]
-        }
+        },
+        pageInnerWidth:'500px',
       };
     },
+    created () {
+      this.getInnerWidth()
+    },
+
     methods: {
+      getInnerWidth(){
+        this.pageInnerWidth = window.innerWidth
+      },
      async login() {
         const loginResult = await login(this.loginForm.username, this.loginForm.password);
         this.loginResult.isSuccess = loginResult.data.isSuccess
@@ -88,8 +93,8 @@
   }
 
     .login_box{
-      width: 500px;
-      height: 400px;
+      //width: 500px;
+      height: 350px;
       /*background-color: white;*/
       border-radius: 3px;
       /*border: 2px solid green;*/

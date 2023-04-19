@@ -10,24 +10,6 @@
         <el-form-item label="ID：">
           <el-input clearable v-model="users.username" placeholder="请输入ID">请输入用户名</el-input>
         </el-form-item>
-        <el-form-item label="分队/总队：">
-          <el-select v-model="users.department" placeholder="请选择">
-            <el-option label="分队" value="分队"></el-option>
-            <el-option label="总队" value="总队"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="职业：">
-          <el-cascader
-            :show-all-levels="false"
-            v-model="users.vocation"
-            :options="allVocationsList"
-            :props="{ expandTrigger: 'hover',
-                 children:'vocationAfterChangeList',
-                 value:'value',
-                 label:'label',
-                 emitPath:false}"
-          ></el-cascader>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="getAllUsersNormalInfo">查询</el-button>
           <el-button type="info" icon="el-icon-refresh" @click="resetUsers">重置</el-button>
@@ -51,29 +33,9 @@
         </el-table-column>
         <el-table-column
           sortable
-          prop="vocation"
-          label="职业"
-        >
-        </el-table-column>
-        <el-table-column
-          sortable
-          prop="department"
-          label="分队/总队"
-        >
-        </el-table-column>
-        <el-table-column
-          sortable
           prop="joinDate"
-          label="入队时间"
+          label="创建时间"
         >
-        </el-table-column>
-        <el-table-column
-          prop="sumPoints"
-          label="总积分">
-        </el-table-column>
-          <el-table-column
-            prop="currentMonthPoints"
-            label="当月积分">
         </el-table-column>
       </el-table>
       <el-pagination

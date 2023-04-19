@@ -5,8 +5,6 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 const isProduction = process.env.NODE_ENV === 'production'
 
-
-
 module.exports = {
   lintOnSave: false,
   publicPath:'/',
@@ -33,7 +31,6 @@ module.exports = {
         maxChunks: 5,
         minChunkSize: 100
       })
-    ]
-
-  }
+    ],
+  },
 }

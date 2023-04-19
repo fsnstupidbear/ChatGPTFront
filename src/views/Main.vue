@@ -5,13 +5,13 @@
     <el-header>
 <!--      logo-->
       <div class="leftBox">
-      <img src="../assets/images/FsnWhite.png">
+      <img src="../assets/images/polytech-logo-en-big.svg">
       </div>
 <!--      标题-->
       <div class="rightBox">
 
         <el-dropdown>
-          <img src="../assets/images/FsnPurple.png">
+          <img src="../assets/images/Emblem-spbpu.png">
 <!--          下拉菜单-->
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-lock" @click.native="changeShowUpdatePassword">修改密码</el-dropdown-item>
@@ -46,7 +46,7 @@
         <el-main >
           <router-view></router-view>
         </el-main>
-        <el-footer>©Fsn 2012——{{this.year}}   指尖演绎舞蹈，打造最强DNF战队</el-footer>
+        <el-footer>©SPbPU {{this.year}}</el-footer>
       </el-container>
     </el-container>
   </el-container>

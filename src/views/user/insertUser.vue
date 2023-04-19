@@ -10,42 +10,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="职业" prop="vocation">
-              <el-cascader
-                :show-all-levels="false"
-                v-model="formData.vocation"
-                :options="allVocationsList"
-                :props="{ expandTrigger: 'hover',
-                 children:'vocationAfterChangeList',
-                 emitPath:false
-                 }"
-                ></el-cascader>
-            </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="分队/总队" prop="department">
-              <el-select v-model="formData.department" placeholder="请选择分队/总队" clearable
-                :style="{width: '100%'}">
-                <el-option v-for="(item, index) in departmentOptions" :key="index" :label="item.label"
-                  :value="item.value" :disabled="item.disabled"></el-option>
-              </el-select>
-            </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="QQ" prop="QQNumber">
-              <el-input v-model="formData.QQNumber" placeholder="请输入QQ" clearable :style="{width: '100%'}">
-              </el-input>
-            </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="联系电话" prop="phoneNumber">
-              <el-input v-model="formData.phoneNumber" placeholder="请输入联系电话" clearable
-                :style="{width: '100%'}">
-              </el-input>
-            </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="入队时间" prop="joinDate">
+            <el-form-item label="创建时间" prop="joinDate">
               <el-date-picker v-model="formData.joinDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                 :style="{width: '100%'}" placeholder="请选择入队时间" clearable></el-date-picker>
             </el-form-item>
